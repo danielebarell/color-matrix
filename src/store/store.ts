@@ -1,5 +1,5 @@
 import { configureStore } from "@reduxjs/toolkit";
-import { colorMatrixSlice } from "./colormatrixSlice";
+import { colorMatrixSlice } from "./colormatrixSlice.ts";
 
 const store = configureStore({
   reducer: {
