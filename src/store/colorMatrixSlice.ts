@@ -18,17 +18,12 @@ export type ColorMatrixPayload = {
 };
 export type PresetIdPayload = { presetId: PresetId };
 //
-type ColorMatrixAction = PayloadAction<ColorMatrixPayload>;
-type PresetAction = PayloadAction<PresetIdPayload>;
+export type ColorMatrixAction = PayloadAction<ColorMatrixPayload>;
+export type PresetAction = PayloadAction<PresetIdPayload>;
 /** Implementation */
 //init state
 const initialState: ColorMatrixState = {
-  matrix: [
-    [1, 0, 0, 0, 0],
-    [0, 1, 0, 0, 0],
-    [0, 0, 1, 0, 0],
-    [0, 0, 0, 1, 0],
-  ],
+  matrix: getPresetMatrixById("Identity")!,
   presetId: "Identity" as PresetId,
 };
 //create slice with name, initialState, reducers

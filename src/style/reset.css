@@ -1,0 +1,101 @@
+/* CSS Reset moderno e completo */
+/* Rimuove margini, padding e bordi di base */
+*,
+*::before,
+*::after {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box; /* Include padding e bordo nella dimensione totale */
+  border: 0;
+  vertical-align: baseline;
+}
+
+/* Imposta altezza e larghezza base */
+html,
+body {
+  height: 100%;
+  line-height: 1.5;
+  font-size: 100%;
+  font-family: sans-serif;
+  background: transparent;
+  color: inherit;
+}
+
+/* Rimuove decorazioni e stili da link */
+a {
+  text-decoration: none;
+  color: inherit;
+}
+
+/* Rimuove stili da liste */
+ul,
+ol {
+  list-style: none;
+}
+
+/* Imposta tabelle */
+table {
+  border-collapse: collapse;
+  border-spacing: 0;
+}
+
+/* Normalizza elementi HTML5 */
+article,
+aside,
+details,
+figcaption,
+figure,
+footer,
+header,
+main,
+menu,
+nav,
+section,
+summary {
+  display: block;
+}
+
+/* Normalizza elementi form */
+button,
+input,
+select,
+textarea {
+  font-family: inherit;
+  font-size: 100%;
+  line-height: 1.15;
+  margin: 0;
+  background: none;
+  border: none;
+  outline: none;
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  appearance: none;
+}
+
+/* Rimuove outline da elementi focusabili (usa con attenzione per accessibilità) */
+:focus {
+  outline: none;
+}
+
+/* Immagini responsive */
+img,
+picture,
+video,
+canvas,
+svg {
+  display: block;
+  max-width: 100%;
+  height: auto;
+}
+
+/* Imposta box-sizing globale */
+html {
+  box-sizing: border-box;
+}
+
+/* Eredita box-sizing per tutti gli elementi */
+*,
+*::before,
+*::after {
+  box-sizing: inherit;
+}
