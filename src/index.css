@@ -1,3 +1,4 @@
-@import url("./style/reset.css");
-@import url("./style/sizes.css");
-@import url("./style/colors");
+@import url("./styles/reset.css");
+@import url("./styles/sizes.css");
+@import url("./styles/colors");
+@import url("./styles/typography");
