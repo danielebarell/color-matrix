@@ -7,4 +7,6 @@
   --l: 3rem;
   --xl: 4rem;
   --xxl: 6rem;
+  --button-size-min: 2.75rem; /*44 pixels*/
+  --button-size-regular: 3rem;
 }

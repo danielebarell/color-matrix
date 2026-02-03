@@ -1,6 +1,7 @@
 .cell {
-  min-width: 2.75rem;
-  min-height: 2.75rem;
+  min-width: var(--button-size-min);
+  min-height: var(--button-size-regular);
+  aspect-ratio: 1/1;
   background-color: var(--fill);
   display: flex;
   align-items: center;
