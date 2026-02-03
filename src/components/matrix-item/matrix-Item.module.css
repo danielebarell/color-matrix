@@ -1,0 +1,12 @@
+.cell {
+  min-width: 2.75rem;
+  min-height: 2.75rem;
+  background-color: var(--fill);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: 1px solid var(--stroke-strong);
+}
+.cell-value {
+  color: var(--text-strong);
+}
