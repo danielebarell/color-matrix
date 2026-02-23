@@ -1,6 +1,6 @@
 import "./App.css";
-import johanna from "./assets/johanna-3502x3502.jpg";
-import Matrix from "./components/matrix/matrix";
+import ImageSlider from "./components/image-slider/ImageSlider.tsx";
+import Matrix from "./components/matrix/Matrix.tsx";
 
 function App() {
   return (
@@ -16,7 +16,7 @@ function App() {
        * preset buttons (Identity, luminance projection, affine inversion)
        *
        * -->*/}
-      <img src={johanna} />
+      <ImageSlider />
     </>
   );
 }

@@ -1,4 +1,4 @@
-import type { ChannelCombination } from "../../utility/channels";
+import type { ChannelCombination } from "../../../utility/channels";
 import styles from "./matrix-Item.module.css";
 type MatrixItemProps = {
   cid: string;

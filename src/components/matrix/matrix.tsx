@@ -1,5 +1,5 @@
 import type { ChannelCombination } from "../../utility/channels";
-import MatrixItem from "../matrix-item/matrix-item";
+import MatrixItem from "./matrix-item/MatrixItem";
 import styles from "./matrix.module.css";
 
 export default function Matrix() {
