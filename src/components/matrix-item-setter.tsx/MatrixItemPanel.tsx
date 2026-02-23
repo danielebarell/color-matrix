@@ -6,11 +6,14 @@ type MatrixItemPanelProps = {
   channelCombination: ChannelCombination;
 };
 export default function MatrixItemPanel(props: MatrixItemPanelProps) {
-  const originalValue = props.value;
+  //const originalValue = props.value;
   return (
     <div className={styles.panel}>
       <header>
-        <div>PALLE</div>
+        <div>
+          {props.channelCombination.columnChannel}{" "}
+          {props.channelCombination.rowChannel}
+        </div>
         <button>CLOSE</button>
       </header>
       <h3>Panel</h3>
