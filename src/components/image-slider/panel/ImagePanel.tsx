@@ -3,6 +3,7 @@ import { useRef, useState } from "react";
 import SVGWrapper from "../SVGWrapper";
 import useImageDraggable from "../../../hooks/useImageDraggable";
 import PanelImage from "./PanelImage";
+import styles from "./image-panel.module.css";
 
 type ImagePanelProps = {
   onExit: () => void;
@@ -25,12 +26,12 @@ export default function ImagePanel({
     setCurrentFilter((prev) => (prev ? "" : filterId));
   }
   return (
-    <div className="image-modal">
-      <nav className="image-nav">
+    <div className={styles["image-modal"]}>
+      <nav className={styles["image-nav"]}>
         <button onClick={onExit}>&times;</button>
         <button onClick={toggleFilter}>Toggle filter</button>
       </nav>
-      <div ref={boundsRef} className="image-bounds">
+      <div ref={boundsRef} className={styles["image-bounds"]}>
         <div ref={containerRef} style={getStyleDimension(dataImage)}>
           <SVGWrapper
             filterId={currentFilter}

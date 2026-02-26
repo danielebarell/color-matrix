@@ -1,9 +1,8 @@
-import type { ChannelCombination } from "../../../utility/channels";
+import type { ColorMatrixPosition } from "../../../data/presets-data";
 import styles from "./matrix-Item.module.css";
 type MatrixItemProps = {
-  cid: string;
-  channelCombination: ChannelCombination;
   value: number;
+  position: ColorMatrixPosition;
 };
 
 export default function MatrixItem(props: MatrixItemProps) {

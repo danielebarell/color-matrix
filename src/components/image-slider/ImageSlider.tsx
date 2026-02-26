@@ -1,4 +1,3 @@
-import "./image-slider.css";
 import { useCallback, useRef, useState } from "react";
 import images, {
   getDataImagebyId,
@@ -11,15 +10,17 @@ import InertiaPlugin from "gsap/InertiaPlugin";
 import gsap from "gsap";
 import { useGSAP } from "@gsap/react";
 import { createPortal } from "react-dom";
+import {
+  PIXEL_THRESHOLD,
+  DRAG_RESISTENCE,
+  EDGE_RESISTENCE,
+} from "../../constants";
+import styles from "./preview.module.css";
 
 gsap.registerPlugin(useGSAP, Draggable, InertiaPlugin);
 
 export type PicturePointerEvent = React.PointerEvent<HTMLElement | SVGElement>;
-/**
- * Minimum pixel movement to distinguish drag from click
- */
-const PIXEL_THRESHOLD = 6;
-
+//
 function ImageSlider() {
   /**
    * hack for Safari and Firefox incorrect behaviour
@@ -46,7 +47,6 @@ function ImageSlider() {
       //check sulla presenza di container current
       if (!container.current || !wrapper.current) return;
       if (isSafari || isFirefox) {
-        console.log("SCROLL");
         wrapper.current.classList.add("native-scroll");
         return;
       }
@@ -54,13 +54,13 @@ function ImageSlider() {
       // In produzione usare "(max-width: 1023px)"
       let mm = gsap.matchMedia();
       mm.add("(min-width: 1024px)", () => {
-        console.log("DRAGGABLE");
         const draggable = Draggable.create(container.current, {
           type: "x",
           inertia: true,
           lockAxis: true,
           allowNativeTouchScrolling: false,
-          dragResistance: 0.1,
+          dragResistance: DRAG_RESISTENCE,
+          edgeResistance: EDGE_RESISTENCE,
           minimumMovement: PIXEL_THRESHOLD,
           bounds: wrapper.current,
         })[0];
@@ -110,7 +110,7 @@ function ImageSlider() {
     <>
       <svg id="filter" width="0" height="0" xmlns="http://www.w3.org/2000/svg">
         <defs>
-          <filter id="myFilter">
+          <filter id="myFilter" className={styles.svgfilter}>
             <feColorMatrix
               values="
                                     1 0 0 0 0
@@ -122,8 +122,8 @@ function ImageSlider() {
         </defs>
       </svg>
       <section>
-        <div className="preview-wrapper" ref={wrapper}>
-          <div className="preview-container" ref={container}>
+        <div className={styles["preview-wrapper"]} ref={wrapper}>
+          <div className={styles["preview-container"]} ref={container}>
             {images.map((value) => (
               <ImageItem
                 key={value.id}

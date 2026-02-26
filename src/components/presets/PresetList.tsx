@@ -6,6 +6,7 @@ import { Draggable, InertiaPlugin } from "gsap/all";
 import gsap from "gsap";
 import { useGSAP } from "@gsap/react";
 import type { PresetIconPosition } from "./PresetIcon";
+import { DRAG_RESISTENCE, EDGE_RESISTENCE } from "../../constants";
 gsap.registerPlugin(Draggable, InertiaPlugin);
 export default function PresetList() {
   function handlePresetSelect(id: string) {
@@ -22,8 +23,8 @@ export default function PresetList() {
         type: "scrollTop",
         inertia: true,
         dragClickables: true,
-        dragResistance: 0.05, // più fluido
-        edgeResistance: 0.85, // migliore gestione bordi
+        dragResistance: DRAG_RESISTENCE,
+        edgeResistance: EDGE_RESISTENCE,
       });
       return () => draggables.forEach((d) => d.kill());
     },

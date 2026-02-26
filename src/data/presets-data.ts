@@ -1,3 +1,24 @@
+export type ColorMatrixPosition =
+  | 0
+  | 1
+  | 2
+  | 3
+  | 4
+  | 5
+  | 6
+  | 7
+  | 8
+  | 9
+  | 10
+  | 11
+  | 12
+  | 13
+  | 14
+  | 15
+  | 16
+  | 17
+  | 18
+  | 19;
 export type ColorMatrix = [
   /**R*/
   number,
@@ -24,8 +45,29 @@ export type ColorMatrix = [
   number,
   number,
 ]; /** tupla per assicurare che la matrice contenga esattamente 20 numeri */
+export type PresetId =
+  | "identity"
+  | "grayscale"
+  | "negative"
+  | "sepia"
+  | "lumred"
+  | "lumgreen"
+  | "lumblue"
+  | "lumcyan"
+  | "lummagenta"
+  | "lumorange"
+  | "isolred"
+  | "isolgreen"
+  | "isolblue"
+  | "swaprb"
+  | "swapgb"
+  | "swaprg"
+  | "warm"
+  | "cool"
+  | "vintage"
+  | "desaturate";
 export type Preset = {
-  id: string;
+  id: PresetId;
   label: string;
   description: string;
   value: ColorMatrix;
@@ -201,7 +243,7 @@ const presetRegister: Readonly<Record<string, Preset>> = {
   desaturate,
 };
 //
-export function getPresetValueById(id: string): ColorMatrix | undefined {
+export function getPresetValueById(id: PresetId): ColorMatrix | undefined {
   const preset = presetRegister[id];
   if (!preset) {
     console.warn("No preset for id:", id);

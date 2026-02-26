@@ -7,6 +7,7 @@ export type ImageItemProps = {
   onPicturePointerDown: (event: PicturePointerEvent) => void;
   onPicturePointerUp: (event: PicturePointerEvent) => void;
 };
+import styles from "../preview.module.css";
 
 export default function ImageItem({
   dataImage,
@@ -21,13 +22,13 @@ export default function ImageItem({
       <SVGWrapper
         filterId={filterId}
         viewBox="0 0 256 256"
-        className="preview-item"
+        className={styles["preview-item"]}
         data-image-id={vectorImage.id}
         onPointerDown={onPicturePointerDown}
         onPointerUp={onPicturePointerUp}
       >
         <img
-          className="picture-item"
+          className={styles["picture-item"]}
           alt={vectorImage.id}
           src={vectorImage.svgImage}
         />
@@ -38,7 +39,7 @@ export default function ImageItem({
     <SVGWrapper
       filterId={filterId}
       viewBox="0 0 128 128"
-      className="preview-item"
+      className={styles["preview-item"]}
       data-image-id={dataImage.id}
       onPointerDown={onPicturePointerDown}
       onPointerUp={onPicturePointerUp}
@@ -53,7 +54,7 @@ export default function ImageItem({
           type="image/webp"
         />
         <img
-          className="picture-item"
+          className={styles["picture-item"]}
           alt={dataImage.id}
           src={dataImage.fallback}
         />

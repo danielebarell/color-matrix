@@ -1,6 +1,10 @@
 import type { Row, Column } from "../utility/channels";
-import type { ColorMatrix, PresetId } from "../utility/presets";
-import { getPresetMatrixById } from "../utility/presets";
+import type {
+  ColorMatrix,
+  ColorMatrixPosition,
+  PresetId,
+} from "../data/presets-data";
+import { getPresetValueById } from "../data/presets-data";
 import { createSlice } from "@reduxjs/toolkit";
 import type { PayloadAction } from "@reduxjs/toolkit";
 import type { ColorMatrixRootState } from "./store";
@@ -12,8 +16,7 @@ export type ColorMatrixState = {
 };
 //actions and payloads
 export type ColorMatrixPayload = {
-  column: Column;
-  row: Row;
+  position: ColorMatrixPosition;
   value: number;
 };
 export type PresetIdPayload = { presetId: PresetId };
@@ -23,8 +26,8 @@ export type PresetAction = PayloadAction<PresetIdPayload>;
 /** Implementation */
 //init state
 const initialState: ColorMatrixState = {
-  matrix: getPresetMatrixById("Identity")!,
-  presetId: "Identity" as PresetId,
+  matrix: getPresetValueById("identity")!,
+  presetId: "identity",
 };
 //create slice with name, initialState, reducers
 export const colorMatrixSlice = createSlice({
@@ -33,14 +36,14 @@ export const colorMatrixSlice = createSlice({
   reducers: {
     //change a single value of the whole matrix
     setValue(state: ColorMatrixState, action: ColorMatrixAction) {
-      const { row, column, value } = action.payload;
-      state.matrix[row][column] = value;
+      const { position, value } = action.payload;
+      state.matrix[position] = value;
     },
     //change id AND matrix
     setPresetId(state: ColorMatrixState, action: PresetAction) {
       const { presetId } = action.payload;
       state.presetId = presetId;
-      state.matrix = getPresetMatrixById(presetId)!;
+      state.matrix = getPresetValueById(presetId)!;
     },
   },
 });
