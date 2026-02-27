@@ -1,10 +1,11 @@
+import type { PresetId } from "../../data/presets-data";
 import styles from "./preset.module.css";
 import PresetIcon, { type PresetIconPosition } from "./PresetIcon";
 type PresetButtonProps = {
-  id: string;
+  id: PresetId;
   label: string;
   position: PresetIconPosition;
-  onSelect: (id: string) => void;
+  onSelect: (id: PresetId) => void;
 };
 export default function PresetButton({
   id,

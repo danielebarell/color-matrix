@@ -1,5 +1,5 @@
 import type { ColorMatrixPosition } from "../../data/presets-data";
-import useColorMatrixSelector from "../../store/useColormatrixSelector";
+import useColorMatrixSelector from "../../hooks/useColormatrixSelector";
 import type { ColorMatrixRootState } from "../../store/store";
 import MatrixItem from "./matrix-item/MatrixItem";
 import styles from "./matrix.module.css";

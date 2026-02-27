@@ -16,12 +16,19 @@ import {
   EDGE_RESISTENCE,
 } from "../../constants";
 import styles from "./preview.module.css";
+import useColorMatrixSelector from "../../hooks/useColormatrixSelector";
 
 gsap.registerPlugin(useGSAP, Draggable, InertiaPlugin);
 
 export type PicturePointerEvent = React.PointerEvent<HTMLElement | SVGElement>;
 //
 function ImageSlider() {
+  /**
+   * matrix value as string beacause SVG feColorMatrix wants a string attribute
+   */
+  const matrixValue = useColorMatrixSelector(
+    (state) => state.colorMatrix.matrix,
+  ).reduce((previous, current) => previous + " " + current, "");
   /**
    * hack for Safari and Firefox incorrect behaviour
    */
@@ -111,13 +118,7 @@ function ImageSlider() {
       <svg id="filter" width="0" height="0" xmlns="http://www.w3.org/2000/svg">
         <defs>
           <filter id="myFilter" className={styles.svgfilter}>
-            <feColorMatrix
-              values="
-                                    1 0 0 0 0
-                                    0 1 0 0 0
-                                    0 0 1 0 1
-                                    0 0 0 1 0"
-            />
+            <feColorMatrix values={matrixValue} />
           </filter>
         </defs>
       </svg>
