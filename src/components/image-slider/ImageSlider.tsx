@@ -18,7 +18,7 @@ import {
 import styles from "./preview.module.css";
 import useColorMatrixSelector from "../../hooks/useColormatrixSelector";
 
-gsap.registerPlugin(useGSAP, Draggable, InertiaPlugin);
+gsap.registerPlugin(Draggable, InertiaPlugin);
 
 export type PicturePointerEvent = React.PointerEvent<HTMLElement | SVGElement>;
 //
@@ -30,13 +30,6 @@ function ImageSlider() {
     (state) => state.colorMatrix.matrix,
   ).reduce((previous, current) => previous + " " + current, "");
   /**
-   * hack for Safari and Firefox incorrect behaviour
-   */
-  const ua = navigator.userAgent;
-  const isFirefox = ua.includes("Firefox");
-  const isSafari =
-    ua.includes("Safari") && !ua.includes("Android") && !ua.includes("Chrome");
-  /**
    * Holds the selected image for the panel.
    * If null → panel is closed.
    */
@@ -44,19 +37,9 @@ function ImageSlider() {
     useState<DataImage | null>(null);
   const container = useRef<HTMLDivElement | null>(null);
   const wrapper = useRef<HTMLDivElement | null>(null);
-  /**
-   * Stores initial pointer X position
-   * (useRef avoids unnecessary re-renders)
-   */
-  const startX = useRef(0);
   useGSAP(
     () => {
-      //check sulla presenza di container current
       if (!container.current || !wrapper.current) return;
-      if (isSafari || isFirefox) {
-        wrapper.current.classList.add("native-scroll");
-        return;
-      }
       // ⚠️ TEMP: attivo su desktop per sviluppo.
       // In produzione usare "(max-width: 1023px)"
       let mm = gsap.matchMedia();
@@ -64,12 +47,21 @@ function ImageSlider() {
         const draggable = Draggable.create(container.current, {
           type: "x",
           inertia: true,
-          lockAxis: true,
-          allowNativeTouchScrolling: false,
           dragResistance: DRAG_RESISTENCE,
           edgeResistance: EDGE_RESISTENCE,
           minimumMovement: PIXEL_THRESHOLD,
-          bounds: wrapper.current,
+          bounds: {
+            minX: wrapper.current!.offsetWidth - container.current!.scrollWidth,
+            maxX: 0,
+          },
+          onClick(event) {
+            const target = event.target as
+              | HTMLImageElement
+              | HTMLPictureElement;
+            if (!target.dataset.imageId) return;
+            const { imageId } = target.dataset;
+            onItemSelect(imageId);
+          },
         })[0];
         // Cleanup draggable instance
         return () => draggable.kill();
@@ -77,7 +69,7 @@ function ImageSlider() {
       // Cleanup media
       return () => mm.revert();
     },
-    { scope: container },
+    { scope: wrapper },
   );
   /** --- Gestione apertura pannello -- */
   const onItemSelect = useCallback((imageId: string) => {
@@ -91,48 +83,34 @@ function ImageSlider() {
   const handleClosePanel = useCallback(() => {
     setPanelSelectedImage(null);
   }, []);
-  /**
-   * Pointer Down → store initial X
-   */
-  const handlePicturePointerDown = useCallback((event: PicturePointerEvent) => {
-    startX.current = event.clientX;
-  }, []);
-  /**
-   * Pointer Up → detect if it's a click or drag
-   */
-  const handlePicturePointerUp = useCallback(
-    (event: PicturePointerEvent) => {
-      const deltaX = Math.abs(event.clientX - startX.current);
-      if (deltaX > PIXEL_THRESHOLD) return;
-      const target = event.target as HTMLElement | SVGElement;
-      const svgItem = target.closest<SVGElement>("[data-image-id]");
-      if (!svgItem?.dataset.imageId) return;
-      const { imageId } = svgItem.dataset;
-      onItemSelect(imageId);
-    },
-    [onItemSelect],
-  );
   //
   return (
     <>
-      <svg id="filter" width="0" height="0" xmlns="http://www.w3.org/2000/svg">
+      <svg
+        id="filter"
+        width="0"
+        height="0"
+        className={styles.svgfilter}
+        xmlns="http://www.w3.org/2000/svg"
+      >
         <defs>
-          <filter id="myFilter" className={styles.svgfilter}>
+          <filter id="myFilter">
             <feColorMatrix values={matrixValue} />
           </filter>
         </defs>
       </svg>
       <section>
         <div className={styles["preview-wrapper"]} ref={wrapper}>
-          <div className={styles["preview-container"]} ref={container}>
+          <div
+            className={styles["preview-container"]}
+            style={{
+              filter: "url(#myFilter)",
+              WebkitFilter: "url(#myFilter)",
+            }}
+            ref={container}
+          >
             {images.map((value) => (
-              <ImageItem
-                key={value.id}
-                filterId="myFilter"
-                dataImage={value}
-                onPicturePointerDown={handlePicturePointerDown}
-                onPicturePointerUp={handlePicturePointerUp}
-              />
+              <ImageItem key={value.id} dataImage={value} />
             ))}
           </div>
         </div>

@@ -1,60 +1,55 @@
+:root {
+  --item-size: 256px;
+  --gap: 8px;
+  --carousel-width: calc((var(--item-size)+var(--gap)) * 6);
+}
 .svgfilter {
   width: 0;
   height: 0;
   position: absolute;
+  border: 5px dotted chartreuse;
 }
 .preview-wrapper {
-  display: flex;
-  width: 70%;
   max-width: 400px;
-  overflow: hidden; /* correct */
+  overflow: hidden;
   border: 1px solid orange;
 }
-/** 
-* hack for Safari and Firefox scrolling
-*/
-.preview-wrapper.native-scroll {
-  overflow-x: scroll;
-  overflow-y: hidden;
-  scroll-behavior: smooth;
-  /*scrollbar-width: none;*/
-}
-
 .preview-container {
-  will-change: transform;
   display: flex;
-  gap: 8px;
-  height: 256px;
+  gap: var(--gap);
   position: relative;
   align-items: center;
-  touch-action: none; /* important for Safari */
-  cursor: grab;
-}
-.preview-item {
-  width: 256px;
-  height: 256px;
-  aspect-ratio: 1/1;
-  flex-shrink: 0;
 }
 .panel-image,
 .picture-item {
+  width: var(--item-size);
+  height: var(--item-size);
+  flex-shrink: 0;
+  flex-grow: 1;
+  flex-basis: var(--item-size);
+}
+.vector-item {
+  width: var(--item-size);
+  height: var(--item-size);
+  object-fit: cover;
+  object-position: center;
+}
+.picture-item img {
   width: 100%;
   height: 100%;
   object-fit: cover;
   object-position: center;
-  display: block;
 }
 
 @media screen and (width<1024px) {
   :root {
-    --item-width: 128px;
-    --item-height: 128px;
-    --carousel-width: 406px;
+    --item-size: 128px;
+    --carousel-width: calc((var(--item-size)+8) * 6);
   }
   .preview-wrapper {
     width: var(--carousel-width); /*bounding box: item width x3 perfetto*/
-    height: cal(
-      var(--item-height) * 2 + 12px
+    height: calc(
+      var(--item-size) * 2 + 12px
     ); /*bounding box: item height x2 abbondante*/
   }
   .preview-container {
@@ -62,9 +57,5 @@
     grid-template-columns: repeat(3, 1fr);
     grid-template-rows: auto;
     width: var(--carousel-width);
-  }
-  .preview-item {
-    width: 128px;
-    height: 128px;
   }
 }

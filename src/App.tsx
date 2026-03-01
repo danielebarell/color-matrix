@@ -8,7 +8,7 @@ function App() {
     <>
       <h1 className="text-main text-main--product-name">color matrix studio</h1>
       <button className="text-main text-main--label">Confirm</button>
-      <Matrix />
+      {/*<Matrix />*/}
       {/**<!--
        * matrix component
        * slider

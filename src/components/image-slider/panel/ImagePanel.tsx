@@ -1,6 +1,6 @@
 import { getStyleDimension, type DataImage } from "../../../data/data-images";
 import { useRef, useState } from "react";
-import SVGWrapper from "../SVGWrapper";
+
 import useImageDraggable from "../../../hooks/useImageDraggable";
 import PanelImage from "./PanelImage";
 import styles from "./image-panel.module.css";
@@ -32,14 +32,15 @@ export default function ImagePanel({
         <button onClick={toggleFilter}>Toggle filter</button>
       </nav>
       <div ref={boundsRef} className={styles["image-bounds"]}>
-        <div ref={containerRef} style={getStyleDimension(dataImage)}>
-          <SVGWrapper
-            filterId={currentFilter}
-            width="100%"
-            height={dataImage.dimension.height}
-          >
-            <PanelImage dataImage={dataImage} />
-          </SVGWrapper>
+        <div
+          ref={containerRef}
+          style={{
+            WebkitFilter: `url(#${currentFilter})`,
+            filter: `url(#${currentFilter})`,
+            ...getStyleDimension(dataImage),
+          }}
+        >
+          <PanelImage dataImage={dataImage} />
         </div>
       </div>
     </div>
