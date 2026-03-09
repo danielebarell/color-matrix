@@ -3,7 +3,7 @@ import images, {
   getDataImagebyId,
   type DataImage,
 } from "../../data/data-images";
-import ImagePanel from "./panel/ImagePanel";
+import ImagePanel from "./image-panel/ImagePanel";
 import ImageItem from "./image-item/ImageItem";
 import { Draggable } from "gsap/all";
 import InertiaPlugin from "gsap/InertiaPlugin";

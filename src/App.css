@@ -1,3 +1,85 @@
-svg {
-  border: 10px solid blue;
+:root {
+  --primary: var(--brand);
+  --primary-hover: #89b1ff;
+  --primary-press: #c0d5ff;
+  --text-strong: #fafcff;
+  --thumb-border: rgba(255, 255, 255, 0.7);
+  --dark: #141414;
+  --secondary: var(--dark);
+  --secondary-hover: #39435c;
+  --secondary-press: #8f96a6;
+  --fill-gradient: linear-gradient(
+    180deg,
+    rgba(49, 58, 79, 1) 18%,
+    rgba(49, 58, 79, 0.85) 41%,
+    rgba(49, 58, 79, 0.85) 100%
+  );
+  --minimum-thumb-size: 2.5rem;
+  --minimum-button-size: 2.75rem;
+  --small-size: var(--s);
+  --xsmall-size: var(--xs);
+  --xxsmall-size: var(--xxs);
+  --minimum-size: calc(var(--xxs)/2);
+  --border-size: 2px;
+  --transition-time: 200ms;
+  --disabled-opacity: 0.3;
+}
+.btn {
+  padding: 0.55rem 1rem;
+  border-radius: var(--xxsmall-size);
+  transition: background-color var(--transition-time) ease-out;
+  /*evita comportamenti errati del bottone in mobile*/
+  user-select: none;
+  -webkit-user-select: none;
+  -webkit-touch-callout: none;
+  touch-action: manipulation;
+  &.btn-primary {
+    color: var(--dark);
+    background-color: var(--primary);
+    &:hover {
+      background-color: var(--primary-hover);
+      cursor: pointer;
+    }
+    &:active {
+      background-color: var(--primary-press);
+    }
+    &:focus {
+      outline: 1px solid var(--primary);
+      outline-offset: 2px;
+    }
+    &:disabled {
+      background-color: var(--primary);
+      opacity: var(--disabled-opacity);
+      cursor: default;
+    }
+  }
+  &.btn-secondary {
+    color: var(--text-strong);
+    background-color: var(--dark);
+    border: var(--border-size) solid var(--text-strong);
+    &:hover {
+      background-color: var(--secondary-hover);
+      cursor: pointer;
+    }
+    &:active {
+      background-color: var(--secondary-press);
+    }
+    &:focus {
+      outline: 1px solid var(--text-strong);
+      outline-offset: 2px;
+    }
+    &:disabled {
+      background-color: var(--dark);
+      opacity: var(--disabled-opacity);
+      cursor: default;
+    }
+  }
+  &.--left {
+    border-top-right-radius: 0;
+    border-bottom-right-radius: 0;
+  }
+  &.--right {
+    border-top-left-radius: 0;
+    border-bottom-left-radius: 0;
+  }
 }

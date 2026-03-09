@@ -1,4 +1,3 @@
-import type { Row, Column } from "../utility/channels";
 import type {
   ColorMatrix,
   ColorMatrixPosition,
@@ -13,21 +12,26 @@ import type { ColorMatrixRootState } from "./store";
 export type ColorMatrixState = {
   matrix: ColorMatrix;
   presetId: PresetId;
+  position: ColorMatrixPosition | null;
+  activeColorComponent: number | null;
 };
 //actions and payloads
 export type ColorMatrixPayload = {
-  position: ColorMatrixPosition;
   value: number;
 };
 export type PresetIdPayload = { presetId: PresetId };
+export type PositionPayload = { position: ColorMatrixPosition | null };
 //
 export type ColorMatrixAction = PayloadAction<ColorMatrixPayload>;
 export type PresetAction = PayloadAction<PresetIdPayload>;
+export type PositionAction = PayloadAction<PositionPayload>;
 /** Implementation */
 //init state
 const initialState: ColorMatrixState = {
   matrix: getPresetValueById("identity")!,
   presetId: "identity",
+  position: 0,
+  activeColorComponent: 0,
 };
 //create slice with name, initialState, reducers
 export const colorMatrixSlice = createSlice({
@@ -36,19 +40,26 @@ export const colorMatrixSlice = createSlice({
   reducers: {
     //change a single value of the whole matrix
     setValue(state: ColorMatrixState, action: ColorMatrixAction) {
-      const { position, value } = action.payload;
-      state.matrix[position] = value;
+      const { value } = action.payload;
+      if (state.position) state.matrix.splice(state.position, 1, value);
     },
     //change id AND matrix
     setPresetId(state: ColorMatrixState, action: PresetAction) {
       const { presetId } = action.payload;
       state.presetId = presetId;
       state.matrix = getPresetValueById(presetId)!;
+      state.activeColorComponent = state.matrix[state.position!];
+    },
+    //set position to prepare to change value
+    setPosition(state, action: PositionAction) {
+      const { position } = action.payload;
+      state.position = position;
+      state.activeColorComponent = state.matrix[position!];
     },
   },
 });
 
-export const { setValue, setPresetId } = colorMatrixSlice.actions;
+export const { setValue, setPresetId, setPosition } = colorMatrixSlice.actions;
 export const selectColorMatrix = (state: ColorMatrixRootState) =>
   state.colorMatrix;
 export default colorMatrixSlice.reducer;

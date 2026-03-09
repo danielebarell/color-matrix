@@ -1,0 +1,73 @@
+.Root {
+  position: relative;
+  display: flex;
+  align-items: center;
+  user-select: none;
+  touch-action: none;
+  width: 100%;
+  height: calc(var(--minimum-thumb-size) + var(--xxsmall-size) * 2);
+  margin: 8px 0;
+}
+
+.Track {
+  background-color: var(--stroke-strong);
+  position: relative;
+  flex-grow: 1;
+  border-radius: var(--minimum-size);
+  height: var(--xsmall-size);
+}
+
+.Range {
+  position: absolute;
+  background-color: var(--primary);
+  border-radius: var(--minimum-size);
+  height: 100%;
+}
+
+.Thumb {
+  display: block;
+  width: var(--minimum-thumb-size);
+  height: var(--minimum-thumb-size);
+  background-color: var(--primary);
+  outline: solid var(--minimum-size) var(--thumb-border);
+  border-radius: 50%;
+  transition: outline-width var(--transition-time) ease-out;
+  &:hover {
+    outline-width: var(--xxsmall-size);
+  }
+  &:focus {
+    outline-width: var(--xxsmall-size);
+  }
+}
+.stepper {
+  margin: var(--xxsmall-size) 0 var(--xxsmall-size) 0;
+  display: flex;
+  input[type="text"] {
+    font-family: var(--font-family-code);
+    font-weight: 400;
+    font-style: normal;
+    font-size: 1.25rem;
+    color: var(--text-strong);
+    background-color: var(--dark);
+    border-bottom: var(--border-size) dashed var(--primary);
+    border-top: var(--border-size) dashed var(--primary);
+    width: auto;
+    max-width: 5rem;
+    padding: var(--minimum-size);
+  }
+}
+.alert {
+  margin-bottom: var(--xxsmall-size);
+  min-height: var(--m);
+  padding: var(--minimum-size) var(--xsmall-size);
+  border-radius: var(--minimum-size);
+  transition: color var(--transition-time) ease-out;
+  &.--warning {
+    color: var(--warning);
+    background-color: var(--dark);
+  }
+  &.--error {
+    color: var(--error);
+    background-color: var(--dark);
+  }
+}
