@@ -19,6 +19,8 @@ type PanelProps = PropsWithChildren & {
   onConfirm?: () => void;
   onUndo?: () => void;
   undoable?: boolean;
+  confirmable?: boolean;
+  hidden: boolean;
   ccc?: ColorComponentCombination;
 };
 /**
@@ -54,6 +56,8 @@ const Panel = ({
   onConfirm,
   onUndo,
   undoable,
+  confirmable,
+  hidden,
   ccc = undefined,
 }: PanelProps) => {
   const handleExit = () => {
@@ -61,7 +65,10 @@ const Panel = ({
   };
 
   return (
-    <article className={styles.panel}>
+    <article
+      className={styles.panel}
+      style={{ display: hidden ? "none" : "block" }}
+    >
       <header className={styles.header}>
         {onExit && (
           <button onClick={handleExit} className={styles["btn-exit"]}>
@@ -78,6 +85,7 @@ const Panel = ({
             <button
               className="btn btn-primary txt-main text-main--label"
               onClick={onConfirm}
+              disabled={!confirmable}
             >
               Confirm
             </button>

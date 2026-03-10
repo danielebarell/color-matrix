@@ -208,6 +208,7 @@ export default function ColorComponentSlider({
       setAlertMessage(isNaNAlert(inputValue));
       return;
     }
+    onSliderChange(+inputField.current.value);
   }
   /**
    * handle operation, the plus and minus button of the stepper
@@ -242,8 +243,11 @@ export default function ColorComponentSlider({
         value={[rawValue || 0]}
         min={-1.5}
         max={1.5}
-        step={0.001}
+        step={0.0001}
         onValueChange={handleSliderChange}
+        style={{
+          opacity: rawValue === null || rawValue === undefined ? 0.5 : 1,
+        }}
       >
         <Slider.Track className={styles.Track} onPointerUp={handleThumbBlur}>
           <Slider.Range className={styles.Range} />
@@ -254,7 +258,12 @@ export default function ColorComponentSlider({
           onPointerUp={handleThumbBlur}
         />
       </Slider.Root>
-      <div className={styles.stepper}>
+      <div
+        className={styles.stepper}
+        style={{
+          opacity: rawValue === null || rawValue === undefined ? 0.5 : 1,
+        }}
+      >
         <button
           className="btn btn-primary --left"
           onPointerDown={() => handleOperation("minus")}

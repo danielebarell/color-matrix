@@ -1,4 +1,5 @@
 .cell {
+  --bg-hover: #1d232f;
   min-width: var(--button-size-min);
   min-height: var(--button-size-regular);
   aspect-ratio: 1/1;
@@ -6,8 +7,27 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  border: 1px solid var(--stroke-strong);
+  border: var(--border-size) solid var(--stroke-strong);
+  &:hover {
+    border-color: var(--primary);
+  }
+  &:active {
+    background-color: var(--dark);
+    .cell-value {
+      color: var(--primary);
+      border-bottom-color: var(--primary);
+    }
+  }
+  &.cell--selected {
+    background-color: var(--dark);
+    border-style: dashed;
+    border-color: var(--primary);
+    .cell-value {
+      border-bottom-style: none;
+    }
+  }
 }
 .cell-value {
   color: var(--text-strong);
+  border-bottom: 1px dotted var(--text-strong);
 }

@@ -46,11 +46,30 @@ export default function ColorComponentWrapper() {
   const initPosition = useColorMatrixSelector(
     (state: ColorMatrixRootState) => state.colorMatrix.position,
   );
+  const prevPositionRef = useRef<ColorMatrixPosition | null>(null);
+  useEffect(() => {
+    console.log("CHANGE POSITION", initPosition);
+    if (prevPositionRef.current !== initPosition) {
+      setCommitedValues([initValue!]);
+      prevPositionRef.current = initPosition;
+    }
+    if (initPosition === null) {
+      isDirty.current = false;
+    }
+  }, [initPosition, initValue]);
+  /**
+   * if the slider hes been used so it's confirmable
+   */
+  const isDirty = useRef(false);
+  /**
+   *
+   */
   const [commitedValues, setCommitedValues] = useState<number[]>([initValue!]);
   const dispatch = useColorMatrixDispatch();
   const colorComponentSlider = useRef<ColorComponentSliderApi | null>(null);
   function onSliderChange(value: number) {
-    console.log("CHANGE", value);
+    console.log("onSliderChange", value);
+    isDirty.current = true;
     if (value === null) return;
     dispatch(setValue({ value }));
     addCommitedValue(value);
@@ -66,14 +85,12 @@ export default function ColorComponentWrapper() {
   }
 
   function handleExit() {
-    console.log("Invalida il valore e Chiudi pannello");
     if (colorComponentSlider.current) colorComponentSlider.current.exit();
     dispatch(setValue({ value: commitedValues[0] }));
     dispatch(setPosition({ position: null }));
     setCommitedValues([]);
   }
   function handleConfirm() {
-    console.log("Conferma e ciao");
     if (colorComponentSlider.current) colorComponentSlider.current.confirm();
     dispatch(setPosition({ position: null }));
     setCommitedValues([]);
@@ -92,7 +109,6 @@ export default function ColorComponentWrapper() {
     console.log("...effect", commitedValues);
 
     const lastValue = commitedValues[commitedValues.length - 1];
-    console.log("lastValue", lastValue);
     if (colorComponentSlider.current)
       colorComponentSlider.current.undo(lastValue);
     dispatch(setValue({ value: lastValue }));
@@ -103,7 +119,12 @@ export default function ColorComponentWrapper() {
       onConfirm={handleConfirm}
       onUndo={handleUndo}
       undoable={commitedValues.length > 1}
+      confirmable={isDirty.current}
       onExit={handleExit!}
+      hidden={
+        commitedValues.length === 1 &&
+        (commitedValues[0] === null || commitedValues[0] === undefined)
+      }
       ccc={getCcCombinationByPosition(initPosition!)}
     >
       <ColorComponentSlider
