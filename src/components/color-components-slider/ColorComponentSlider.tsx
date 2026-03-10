@@ -96,6 +96,7 @@ export default function ColorComponentSlider({
   };
   const operationTimer = useRef<number | null>(null);
   const precedentValue = useRef<number | null>(null);
+  const draggingRef = useRef(false);
   /* ============================================================
    * Effects
    * ============================================================ */
@@ -130,7 +131,7 @@ export default function ColorComponentSlider({
       inputField.current.value =
         rawValue === null || rawValue === undefined ? "" : rawValue.toFixed(4);
     }
-    checkOutOfBounds();
+    if (!draggingRef.current) checkOutOfBounds();
   }, [rawValue, inputField]);
   /* ============================================================
    * API
@@ -161,6 +162,7 @@ export default function ColorComponentSlider({
    */
   function handleSliderChange(values: number[]) {
     const [value] = values;
+    draggingRef.current = true;
     setRawValue(value);
   }
   /**
@@ -171,6 +173,7 @@ export default function ColorComponentSlider({
     if (rawValue === null) return;
     if (precedentValue.current === rawValue) return;
     onSliderChange(rawValue);
+    draggingRef.current = false;
     checkOutOfBounds();
     precedentValue.current = rawValue;
   }
@@ -181,6 +184,7 @@ export default function ColorComponentSlider({
     if (rawValue === null) return;
     if (precedentValue.current === rawValue) return;
     onSliderChange(rawValue);
+    draggingRef.current = false;
     checkOutOfBounds();
     precedentValue.current = rawValue;
   }
@@ -212,6 +216,7 @@ export default function ColorComponentSlider({
   function handleOperation(o: Operation) {
     setOperation(o);
     setAlertMessage(null);
+    draggingRef.current = true;
   }
   /**
    * handle input focus, to temporarily erase field value
