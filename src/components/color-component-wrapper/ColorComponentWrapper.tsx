@@ -13,12 +13,15 @@ import type { ColorMatrixRootState } from "../../store/store";
 import useColorMatrixDispatch from "../../hooks/useColormatrixDispatch";
 import { setPosition, setValue } from "../../store/colormatrixSlice";
 
+/**
+ *
+ * @param position Position in the matrix
+ * @returns channel of color combination
+ */
 function getCcCombinationByPosition(
   position: ColorMatrixPosition,
 ): ColorComponentCombination | undefined {
   if (position === null) return;
-  console.log("position", position);
-
   const columnsNumber = 5;
   const column = colorComponentValues[
     position % columnsNumber
@@ -43,9 +46,7 @@ export default function ColorComponentWrapper() {
   const initPosition = useColorMatrixSelector(
     (state: ColorMatrixRootState) => state.colorMatrix.position,
   );
-  const [commitedValues, setCommitedValues] = useState<number[]>([
-    initValue || 0,
-  ]);
+  const [commitedValues, setCommitedValues] = useState<number[]>([initValue!]);
   const dispatch = useColorMatrixDispatch();
   const colorComponentSlider = useRef<ColorComponentSliderApi | null>(null);
   function onSliderChange(value: number) {
@@ -55,7 +56,13 @@ export default function ColorComponentWrapper() {
     addCommitedValue(value);
   }
   function addCommitedValue(value: number) {
-    setCommitedValues((prev) => [...prev, value]);
+    console.log("add commited value", value);
+    setCommitedValues((prev) => {
+      const newArr = [...prev];
+      if (newArr[0] === null || newArr[0] === undefined) newArr.shift();
+      newArr.push(value);
+      return newArr;
+    });
   }
 
   function handleExit() {
@@ -69,11 +76,12 @@ export default function ColorComponentWrapper() {
     console.log("Conferma e ciao");
     if (colorComponentSlider.current) colorComponentSlider.current.confirm();
     dispatch(setPosition({ position: null }));
+    setCommitedValues([]);
   }
 
   function handleUndo() {
-    console.log("torna indietro");
-    if (commitedValues.length > 1)
+    console.log("torna indietro", commitedValues.length);
+    if (commitedValues.length > 0)
       setCommitedValues((prev) => {
         const newArr = [...prev];
         newArr.pop();
@@ -81,7 +89,10 @@ export default function ColorComponentWrapper() {
       });
   }
   useEffect(() => {
+    console.log("...effect", commitedValues);
+
     const lastValue = commitedValues[commitedValues.length - 1];
+    console.log("lastValue", lastValue);
     if (colorComponentSlider.current)
       colorComponentSlider.current.undo(lastValue);
     dispatch(setValue({ value: lastValue }));

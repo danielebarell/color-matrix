@@ -30,8 +30,8 @@ export type PositionAction = PayloadAction<PositionPayload>;
 const initialState: ColorMatrixState = {
   matrix: getPresetValueById("identity")!,
   presetId: "identity",
-  position: 0,
-  activeColorComponent: 0,
+  position: null,
+  activeColorComponent: null,
 };
 //create slice with name, initialState, reducers
 export const colorMatrixSlice = createSlice({
@@ -41,7 +41,8 @@ export const colorMatrixSlice = createSlice({
     //change a single value of the whole matrix
     setValue(state: ColorMatrixState, action: ColorMatrixAction) {
       const { value } = action.payload;
-      if (state.position) state.matrix.splice(state.position, 1, value);
+      if (state.position === null || state.position === undefined) return;
+      state.matrix.splice(state.position, 1, value);
     },
     //change id AND matrix
     setPresetId(state: ColorMatrixState, action: PresetAction) {

@@ -102,6 +102,7 @@ export default function ColorComponentSlider({
   useEffect(() => {
     setRawValue(currentValue);
     precedentValue.current = currentValue;
+    onSliderChange(currentValue!);
   }, [currentValue]);
   /**
    * Implement continuous step change on minus and plus buttons' press
