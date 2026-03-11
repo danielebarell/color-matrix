@@ -1,11 +1,12 @@
 .preset-wrapper {
-  height: 50%;
+  height: 150px;
   min-height: 150px;
   overflow-y: auto;
   overflow-x: hidden;
   scroll-behavior: auto;
   border: 1px solid #b4bccc;
   border-radius: 4px;
+  scrollbar-color: var(--primary) var(--fill);
 }
 
 .preset-list {
@@ -17,12 +18,16 @@
   gap: 8px;
   background-color: #1a1e28;
   position: relative;
+  padding: var(--xxs);
 }
 .preset-item {
   width: 100%;
   .button {
+    color: var(--text-strong);
     width: 100%;
     display: flex;
+    gap: var(--xxs);
+    align-items: center;
   }
 }
 .icon {
@@ -34,39 +39,66 @@
   top: 50%;
   left: 50%;
   transform: translate(-50%, -45%);
-  transition: all 500ms;
+  transition: all var(--transition-time);
+  opacity: 0.5;
 }
 .ico-button-bg {
   background-image: url("../../assets/icons/presets_ico_bg.svg");
-  border: 2px solid gray;
+  border: var(--border-size) solid var(--stroke-weak);
   border-radius: 4px;
-  width: 48px;
-  height: 48px;
+  width: var(--l);
+  height: var(--l);
 }
 .preset-item:hover {
   .button {
-    background-color: rgba(200, 235, 255, 0.272);
+    span.label {
+      border-bottom: 1px dotted var(--text-strong);
+    }
   }
   .ico-button-bg {
-    filter: brightness(2);
-    border-color: aliceblue;
+    filter: brightness(1.2);
+    border-color: var(--primary);
   }
   .ico-matrix {
-    filter: drop-shadow(0 2px 2px rgb(253, 254, 254));
-    transform: translate(-50%, -50%);
-  }
-}
-/**.preset-item:focus {
-  .button {
-    background-color: rgb(255, 200, 0);
+    transform: translate(-50%, -55%);
+    opacity: 1;
   }
 }
 .preset-item:active {
+  background-color: var(--dark);
   .button {
-    background-color: rgb(170, 0, 255);
+    span.label {
+      color: var(--primary);
+      border-bottom: 1px dotted var(--primary);
+    }
+  }
+  .ico-button-bg {
+    filter: brightness(1.2);
+    border-color: var(--primary);
+  }
+  .ico-matrix {
+    transform: translate(-50%, -55%);
+    opacity: 1;
   }
 }
-.button:focus {
-  background-color: rgb(255, 200, 0);
+.preset-item {
+  &.selected {
+    background-color: var(--dark);
+    .button {
+      outline: 2px dashed var(--primary);
+      span.label {
+        color: var(--primary);
+        border-bottom-style: none;
+      }
+    }
+    .ico-button-bg {
+      filter: brightness(1.2);
+      border-width: 0;
+      margin-left: var(--border-size);
+    }
+    .ico-matrix {
+      transform: translate(-50%, -55%);
+      opacity: 1;
+    }
+  }
 }
-*/

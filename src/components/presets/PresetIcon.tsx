@@ -22,9 +22,9 @@ export type PresetIconPosition =
   | 18
   | 19;
 type PresetIconProps = {
-  position: PresetIconPosition;
+  iconPosition: PresetIconPosition;
 };
-export default function PresetIcon({ position }: PresetIconProps) {
+export default function PresetIcon({ iconPosition }: PresetIconProps) {
   return (
     <div className={styles.icon}>
       <span className={styles["ico-matrix"]}>
@@ -32,7 +32,7 @@ export default function PresetIcon({ position }: PresetIconProps) {
       </span>
       <div
         className={styles["ico-button-bg"]}
-        style={{ backgroundPositionY: `${(48 + 8) * -position}px` }}
+        style={{ backgroundPositionY: `${(48 + 8) * -iconPosition}px` }}
       />
     </div>
   );

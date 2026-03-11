@@ -2,6 +2,7 @@
   background-image: var(--fill-gradient);
   border: var(--border-size) solid var(--stroke-weak);
   border-radius: var(--xxsmall-size);
+  transition: opacity var(--transition-time) ease-out;
 }
 .header {
   padding: 0 var(--xsmall-size);

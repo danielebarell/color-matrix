@@ -48,7 +48,7 @@ export default function ColorComponentWrapper() {
   );
   const prevPositionRef = useRef<ColorMatrixPosition | null>(null);
   useEffect(() => {
-    console.log("CHANGE POSITION", initPosition);
+    //console.log("CHANGE POSITION", initPosition);
     if (prevPositionRef.current !== initPosition) {
       setCommitedValues([initValue!]);
       prevPositionRef.current = initPosition;
@@ -68,14 +68,14 @@ export default function ColorComponentWrapper() {
   const dispatch = useColorMatrixDispatch();
   const colorComponentSlider = useRef<ColorComponentSliderApi | null>(null);
   function onSliderChange(value: number) {
-    console.log("onSliderChange", value);
+    //console.log("onSliderChange", value);
     isDirty.current = true;
     if (value === null) return;
     dispatch(setValue({ value }));
     addCommitedValue(value);
   }
   function addCommitedValue(value: number) {
-    console.log("add commited value", value);
+    //console.log("add commited value", value);
     setCommitedValues((prev) => {
       const newArr = [...prev];
       if (newArr[0] === null || newArr[0] === undefined) newArr.shift();
@@ -106,7 +106,7 @@ export default function ColorComponentWrapper() {
       });
   }
   useEffect(() => {
-    console.log("...effect", commitedValues);
+    //console.log("...effect", commitedValues);
 
     const lastValue = commitedValues[commitedValues.length - 1];
     if (colorComponentSlider.current)
@@ -127,6 +127,12 @@ export default function ColorComponentWrapper() {
       }
       ccc={getCcCombinationByPosition(initPosition!)}
     >
+      {/**
+       * hidden={
+        commitedValues.length === 1 &&
+        (commitedValues[0] === null || commitedValues[0] === undefined)
+      }
+       */}
       <ColorComponentSlider
         ref={colorComponentSlider}
         onSliderChange={onSliderChange}

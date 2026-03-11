@@ -20,7 +20,7 @@ type PanelProps = PropsWithChildren & {
   onUndo?: () => void;
   undoable?: boolean;
   confirmable?: boolean;
-  hidden: boolean;
+  hidden?: boolean;
   ccc?: ColorComponentCombination;
 };
 /**
@@ -57,7 +57,7 @@ const Panel = ({
   onUndo,
   undoable,
   confirmable,
-  hidden,
+  hidden = false,
   ccc = undefined,
 }: PanelProps) => {
   const handleExit = () => {
@@ -65,10 +65,7 @@ const Panel = ({
   };
 
   return (
-    <article
-      className={styles.panel}
-      style={{ display: hidden ? "none" : "block" }}
-    >
+    <article className={styles.panel} style={{ opacity: hidden ? "0" : "1" }}>
       <header className={styles.header}>
         {onExit && (
           <button onClick={handleExit} className={styles["btn-exit"]}>

@@ -2,7 +2,7 @@ import "./App.css";
 import ColorComponentWrapper from "./components/color-component-wrapper/ColorComponentWrapper.tsx";
 import ImageSlider from "./components/image-slider/ImageSlider.tsx";
 import Matrix from "./components/matrix/Matrix.tsx";
-import PresetList from "./components/presets/PresetList.tsx";
+import PresetListWrapper from "./components/presets/PresetListWrapper.tsx";
 
 function App() {
   return (
@@ -18,7 +18,7 @@ function App() {
       <ColorComponentWrapper />
       <Matrix />
       <ImageSlider />
-      <PresetList />
+      <PresetListWrapper />
     </>
   );
 }

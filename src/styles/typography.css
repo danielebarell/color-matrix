@@ -16,6 +16,7 @@
 .text-main--product-name {
   font-weight: bold;
   font-size: 1.25rem;
+  color: var(--text-strong);
 }
 .text-main--label {
   font-size: 1.25rem;

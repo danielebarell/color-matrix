@@ -24,6 +24,9 @@
   --transition-time: 200ms;
   --disabled-opacity: 0.3;
 }
+body {
+  background-color: var(--dark);
+}
 .btn {
   padding: 0.55rem 1rem;
   border-radius: var(--xxsmall-size);
@@ -53,6 +56,7 @@
       cursor: default;
     }
   }
+
   &.btn-secondary {
     color: var(--text-strong);
     background-color: var(--dark);

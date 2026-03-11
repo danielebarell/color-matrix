@@ -4,19 +4,25 @@ import PresetIcon, { type PresetIconPosition } from "./PresetIcon";
 type PresetButtonProps = {
   id: PresetId;
   label: string;
-  position: PresetIconPosition;
+  iconPosition: PresetIconPosition;
+  isSelected: boolean;
   onSelect: (id: PresetId) => void;
 };
 export default function PresetButton({
   id,
   label,
   onSelect,
-  position,
+  iconPosition,
+  isSelected,
 }: PresetButtonProps) {
   return (
-    <li onClick={() => onSelect(id)} className={styles["preset-item"]}>
-      <button className={styles["button"]}>
-        <PresetIcon position={position} /> {label}
+    <li
+      onClick={() => onSelect(id)}
+      className={`${styles["preset-item"]} ${isSelected ? styles.selected : ""}`}
+    >
+      <button className={`${styles["button"]} text-main`}>
+        <PresetIcon iconPosition={iconPosition} />{" "}
+        <span className={styles.label}>{label}</span>
       </button>
     </li>
   );
