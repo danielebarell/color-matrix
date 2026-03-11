@@ -1,5 +1,9 @@
 .cell {
   --bg-hover: #1d232f;
+  .cell-value {
+    color: var(--text-strong);
+    cursor: pointer;
+  }
   min-width: var(--button-size-min);
   min-height: var(--button-size-regular);
   aspect-ratio: 1/1;
@@ -10,6 +14,9 @@
   border: var(--border-size) solid var(--stroke-strong);
   &:hover {
     border-color: var(--primary);
+    .cell-value {
+      border-bottom: 1px dotted var(--text-strong);
+    }
   }
   &:active {
     background-color: var(--dark);
@@ -23,11 +30,9 @@
     border-style: dashed;
     border-color: var(--primary);
     .cell-value {
+      color: var(--primary);
       border-bottom-style: none;
+      cursor: default;
     }
   }
-}
-.cell-value {
-  color: var(--text-strong);
-  border-bottom: 1px dotted var(--text-strong);
 }
