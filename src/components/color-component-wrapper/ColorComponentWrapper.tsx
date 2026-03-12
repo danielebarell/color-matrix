@@ -11,7 +11,11 @@ import { colorComponentValues } from "../panel/Panel";
 import useColorMatrixSelector from "../../hooks/useColormatrixSelector";
 import type { ColorMatrixRootState } from "../../store/store";
 import useColorMatrixDispatch from "../../hooks/useColormatrixDispatch";
-import { setPosition, setValue } from "../../store/colormatrixSlice";
+import {
+  setPosition,
+  setValue,
+  setPresetId,
+} from "../../store/colormatrixSlice";
 
 /**
  *
@@ -46,6 +50,10 @@ export default function ColorComponentWrapper() {
   const initPosition = useColorMatrixSelector(
     (state: ColorMatrixRootState) => state.colorMatrix.position,
   );
+  /**
+   * if the slider hes been used so it's confirmable
+   */
+  const isDirty = useRef(false);
   const prevPositionRef = useRef<ColorMatrixPosition | null>(null);
   useEffect(() => {
     //console.log("CHANGE POSITION", initPosition);
@@ -56,11 +64,7 @@ export default function ColorComponentWrapper() {
     if (initPosition === null) {
       isDirty.current = false;
     }
-  }, [initPosition, initValue]);
-  /**
-   * if the slider hes been used so it's confirmable
-   */
-  const isDirty = useRef(false);
+  }, [initPosition, initValue, isDirty]);
   /**
    *
    */
@@ -68,9 +72,12 @@ export default function ColorComponentWrapper() {
   const dispatch = useColorMatrixDispatch();
   const colorComponentSlider = useRef<ColorComponentSliderApi | null>(null);
   function onSliderChange(value: number) {
-    //console.log("onSliderChange", value);
+    console.log("onSliderChange", value);
+    if (isDirty.current) {
+      dispatch(setPresetId({ presetId: null }));
+    }
+    if (value === null || value === undefined) return;
     isDirty.current = true;
-    if (value === null) return;
     dispatch(setValue({ value }));
     addCommitedValue(value);
   }
@@ -107,7 +114,6 @@ export default function ColorComponentWrapper() {
   }
   useEffect(() => {
     //console.log("...effect", commitedValues);
-
     const lastValue = commitedValues[commitedValues.length - 1];
     if (colorComponentSlider.current)
       colorComponentSlider.current.undo(lastValue);

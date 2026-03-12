@@ -19,6 +19,7 @@
   height: 100%;
   border-bottom-left-radius: var(--modal-radius-border);
   border-bottom-right-radius: var(--modal-radius-border);
+  background-image: url(/images/bg-trasparent.svg);
 }
 .image-nav {
   display: flex;

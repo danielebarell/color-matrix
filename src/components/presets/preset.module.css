@@ -7,6 +7,7 @@
   border: 1px solid #b4bccc;
   border-radius: 4px;
   scrollbar-color: var(--primary) var(--fill);
+  margin-bottom: var(--xxs);
 }
 
 .preset-list {

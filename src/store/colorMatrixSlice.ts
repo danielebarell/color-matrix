@@ -11,7 +11,7 @@ import type { ColorMatrixRootState } from "./store";
 //state
 export type ColorMatrixState = {
   matrix: ColorMatrix;
-  presetId: PresetId;
+  presetId: PresetId | null;
   position: ColorMatrixPosition | null;
   activeColorComponent: number | null;
 };
@@ -19,7 +19,7 @@ export type ColorMatrixState = {
 export type ColorMatrixPayload = {
   value: number;
 };
-export type PresetIdPayload = { presetId: PresetId };
+export type PresetIdPayload = { presetId: PresetId | null };
 export type PositionPayload = { position: ColorMatrixPosition | null };
 //
 export type ColorMatrixAction = PayloadAction<ColorMatrixPayload>;
@@ -48,6 +48,7 @@ export const colorMatrixSlice = createSlice({
     setPresetId(state: ColorMatrixState, action: PresetAction) {
       const { presetId } = action.payload;
       state.presetId = presetId;
+      if (!presetId) return;
       state.matrix = getPresetValueById(presetId)!;
       state.activeColorComponent = state.matrix[state.position!];
     },

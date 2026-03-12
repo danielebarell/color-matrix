@@ -13,6 +13,7 @@
   max-width: 400px;
   overflow: hidden;
   border: 1px solid orange;
+  background-image: url(/images/bg-trasparent.svg);
 }
 .preview-container {
   display: flex;

@@ -14,11 +14,14 @@ export default function PresetListWrapper() {
   const initPresetId = useColorMatrixSelector(
     (state: ColorMatrixRootState) => state.colorMatrix.presetId,
   );
-  const currentPresetId = useRef<PresetId | null>(initPresetId);
+  useEffect(() => {
+    console.log("initPresetId", initPresetId);
+    if (!initPresetId) setCommitedPresets((prev) => [...prev, null]);
+  }, [initPresetId]);
   const dispatch = useColorMatrixDispatch();
-  const [commitedPresets, setCommitedPresets] = useState<PresetId[]>([
-    initPresetId,
-  ]);
+  const [commitedPresets, setCommitedPresets] = useState<
+    Array<PresetId | null>
+  >([initPresetId]);
   const isDirty = useRef(false);
   function handleUndo() {
     console.log("undo", commitedPresets);
@@ -28,6 +31,7 @@ export default function PresetListWrapper() {
       return newArr;
     });
   }
+
   function handleConfirm() {
     isDirty.current = false;
     setCommitedPresets((prev) => [[...prev].pop()!]);
@@ -39,10 +43,10 @@ export default function PresetListWrapper() {
   }
   useEffect(() => {
     console.log("...effect", commitedPresets);
-    currentPresetId.current = commitedPresets[commitedPresets.length - 1];
+    const currentPresetId = commitedPresets[commitedPresets.length - 1];
     dispatch(
       setPresetId({
-        presetId: currentPresetId.current,
+        presetId: currentPresetId,
       }),
     );
   }, [commitedPresets]);
@@ -60,7 +64,7 @@ export default function PresetListWrapper() {
         <PresetList
           onSelect={handlePresetSelect}
           presets={presets}
-          currentId={currentPresetId.current}
+          currentId={commitedPresets[commitedPresets.length - 1]}
         />
       </div>
     </Panel>
