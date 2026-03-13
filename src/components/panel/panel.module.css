@@ -13,23 +13,10 @@
 .separator {
   height: 0;
   border-width: 1px;
-  border: 1px solid #4f5460;
+  border: 1px solid var(--separator-color);
 }
 .content {
   padding: 0 var(--xsmall-size) var(--xsmall-size) var(--xsmall-size);
-}
-.btn-exit {
-  color: var(--text-strong);
-  min-width: var(--minimum-button-size);
-  min-height: var(--minimum-button-size);
-  font-size: 1.5rem;
-  font-weight: lighter;
-  display: flex;
-  justify-content: left;
-  align-items: center;
-  &:hover {
-    cursor: pointer;
-  }
 }
 .actions {
   display: flex;

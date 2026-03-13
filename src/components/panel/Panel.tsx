@@ -68,7 +68,7 @@ const Panel = ({
     <article className={styles.panel} style={{ opacity: hidden ? "0" : "1" }}>
       <header className={styles.header}>
         {onExit && (
-          <button onClick={handleExit} className={styles["btn-exit"]}>
+          <button onClick={handleExit} className="btn-exit">
             &times;
           </button>
         )}

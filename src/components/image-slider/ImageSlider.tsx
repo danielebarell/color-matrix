@@ -44,6 +44,8 @@ function ImageSlider() {
       // In produzione usare "(max-width: 1023px)"
       let mm = gsap.matchMedia();
       mm.add("(min-width: 1024px)", () => {
+        console.log(container.current!.scrollWidth);
+
         const draggable = Draggable.create(container.current, {
           type: "x",
           inertia: true,

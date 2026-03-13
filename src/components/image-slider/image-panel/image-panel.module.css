@@ -1,28 +1,30 @@
 :root {
-  --modal-radius-border: 8px;
+  --modal-height: 100dvh;
+  --nav-height: calc(var(--minimum-button-size) + var(--border-size) * 2);
 }
 .image-modal {
   top: 0;
   width: 100%;
-  height: 100%;
+  height: var(--modal-height);
   max-width: 1000px;
   position: absolute;
   z-index: 100000; /*images in GSAP Draggable image carousel are zindex:1000++ */
-  border-radius: var(--modal-radius-border);
+  border-radius: var(--xxsmall-size);
   border: 2px solid;
-  border-color: gainsboro;
-  background-color: gray;
+  border-color: var(--stroke-weak);
+  background-image: var(--fill-gradient);
 }
 .image-bounds {
   overflow: hidden;
   width: 100%;
-  height: 100%;
-  border-bottom-left-radius: var(--modal-radius-border);
-  border-bottom-right-radius: var(--modal-radius-border);
+  max-height: calc(var(--modal-height) - var(--nav-height));
+  border-bottom-left-radius: var(--xxsmall-size);
+  border-bottom-right-radius: var(--xxsmall-size);
   background-image: url(/images/bg-trasparent.svg);
 }
 .image-nav {
   display: flex;
   justify-content: space-between;
-  padding: 20px;
+  padding: 0 var(--xsmall-size);
+  border-bottom: 1px solid var(--separator-color);
 }

@@ -8,6 +8,7 @@
   --secondary: var(--dark);
   --secondary-hover: #39435c;
   --secondary-press: #8f96a6;
+  --separator-color: #4f5460;
   --fill-gradient: linear-gradient(
     180deg,
     rgba(49, 58, 79, 1) 18%,
@@ -85,5 +86,18 @@ body {
   &.--right {
     border-top-left-radius: 0;
     border-bottom-left-radius: 0;
+  }
+}
+.btn-exit {
+  color: var(--text-strong);
+  min-width: var(--minimum-button-size);
+  min-height: var(--minimum-button-size);
+  font-size: 1.5rem;
+  font-weight: lighter;
+  display: flex;
+  justify-content: left;
+  align-items: center;
+  &:hover {
+    cursor: pointer;
   }
 }

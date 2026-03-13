@@ -32,6 +32,9 @@
 .vector-item {
   width: var(--item-size);
   height: var(--item-size);
+  flex-shrink: 0;
+  flex-grow: 1;
+  flex-basis: var(--item-size);
   object-fit: cover;
   object-position: center;
 }

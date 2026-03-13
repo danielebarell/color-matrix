@@ -1,6 +1,5 @@
 import { getStyleDimension, type DataImage } from "../../../data/data-images";
 import { useRef, useState } from "react";
-
 import useImageDraggable from "../../../hooks/useImageDraggable";
 import PanelImage from "./PanelImage";
 import styles from "./image-panel.module.css";
@@ -28,8 +27,16 @@ export default function ImagePanel({
   return (
     <div className={styles["image-modal"]}>
       <nav className={styles["image-nav"]}>
-        <button onClick={onExit}>&times;</button>
-        <button onClick={toggleFilter}>Toggle filter</button>
+        <button onClick={onExit} className="btn-exit">
+          &times;
+        </button>
+
+        <button
+          className="btn btn-primary txt-main text-main--label"
+          onClick={toggleFilter}
+        >
+          Toggle filter
+        </button>
       </nav>
       <div ref={boundsRef} className={styles["image-bounds"]}>
         <div
