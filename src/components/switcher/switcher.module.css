@@ -1,0 +1,41 @@
+.Root {
+  all: unset;
+  width: 42px;
+  height: 25px;
+  background-color: var(--dark);
+  border-radius: 9999px;
+  position: relative;
+  -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
+  &:focus {
+    box-shadow: 0 0 0 2px black;
+  }
+  &[data-state="checked"] {
+    background-color: black;
+  }
+  cursor: pointer;
+  &[data-disabled] {
+    opacity: var(--disabled-opacity);
+    cursor: default;
+  }
+}
+
+.Thumb {
+  display: block;
+  width: var(--xs);
+  height: var(--xs);
+  background-color: var(--primary);
+  border-radius: 9999px;
+  transition: transform var(--transition-time) ease-out;
+  transform: translateX(2px);
+  will-change: transform;
+  &[data-state="checked"] {
+    transform: translateX(22px);
+  }
+}
+.Label {
+  padding: 0 var(--xxs);
+  color: var(--text-strong);
+  letter-spacing: 2%;
+  line-height: 1;
+  user-select: none;
+}

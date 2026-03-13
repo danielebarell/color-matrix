@@ -3,6 +3,7 @@ import { useRef, useState } from "react";
 import useImageDraggable from "../../../hooks/useImageDraggable";
 import PanelImage from "./PanelImage";
 import styles from "./image-panel.module.css";
+import Switcher from "../../switcher/Switcher";
 
 type ImagePanelProps = {
   onExit: () => void;
@@ -30,13 +31,7 @@ export default function ImagePanel({
         <button onClick={onExit} className="btn-exit">
           &times;
         </button>
-
-        <button
-          className="btn btn-primary txt-main text-main--label"
-          onClick={toggleFilter}
-        >
-          Toggle filter
-        </button>
+        <Switcher label="Filter" toggleFilter={toggleFilter} />
       </nav>
       <div ref={boundsRef} className={styles["image-bounds"]}>
         <div
