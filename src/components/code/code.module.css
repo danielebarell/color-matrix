@@ -1,0 +1,24 @@
+.copy-btn {
+  margin: var(--xs) 2px var(--xxs) 2px;
+  display: flex;
+  gap: var(--xxs);
+  color: var(--text-strong);
+  letter-spacing: 2%;
+  &::before {
+    content: url("/icons/ico-copy.svg");
+    min-width: var(--xs);
+    min-height: var(--xs);
+  }
+}
+.textarea {
+  border: 1px solid var(--stroke-strong);
+  color: var(--text-strong);
+  background-color: var(--inner-area);
+  scrollbar-color: var(--primary) var(--fill);
+  border-radius: var(--border-radius--4);
+  width: 100%;
+  min-height: 55px;
+  &.--tall {
+    height: 100px;
+  }
+}

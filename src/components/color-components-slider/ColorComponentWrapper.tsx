@@ -1,7 +1,7 @@
 import { useEffect, useRef, useState } from "react";
 import ColorComponentSlider, {
   type ColorComponentSliderApi,
-} from "../color-components-slider/ColorComponentSlider";
+} from "./ColorComponentSlider";
 import Panel, {
   type ColorComponent,
   type ColorComponentCombination,

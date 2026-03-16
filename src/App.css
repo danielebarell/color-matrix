@@ -9,6 +9,7 @@
   --secondary-hover: #39435c;
   --secondary-press: #8f96a6;
   --separator-color: #4f5460;
+  --inner-area: #1a1e28;
   --fill-gradient: linear-gradient(
     180deg,
     rgba(49, 58, 79, 1) 18%,
@@ -24,6 +25,7 @@
   --border-size: 2px;
   --transition-time: 200ms;
   --disabled-opacity: 0.3;
+  --border-radius--4: 4px;
 }
 body {
   background-color: var(--dark);
