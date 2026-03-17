@@ -7,9 +7,8 @@ export const getCss = () => {
 };
 
 export const getSvg = (values: ColorMatrix) => {
-  const valuesTxt = values.reduce((acc, val) => acc + val + " ", "");
-  return `
-<svg width="100%" height="100%">
+  const valuesTxt = values.join(" ");
+  return `<svg width="100%" height="100%">
     <defs>
         <filter id="red">
             <feColorMatrix
@@ -18,6 +17,5 @@ export const getSvg = (values: ColorMatrix) => {
             ></feColorMatrix>
         </filter>
     </defs>
-</svg>
-`;
+</svg>`;
 };
