@@ -14,9 +14,15 @@
   letter-spacing: 2%;
 }
 .text-main--product-name {
+  padding-left: 0.5rem;
   font-weight: bold;
   font-size: 1.25rem;
   color: var(--text-strong);
+}
+@media screen and (width>1023px) {
+  .text-main--product-name {
+    font-size: 2rem;
+  }
 }
 .text-main--label {
   font-size: 1.25rem;

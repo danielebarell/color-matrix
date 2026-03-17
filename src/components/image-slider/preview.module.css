@@ -3,16 +3,21 @@
   --gap: 8px;
   --carousel-width: calc((var(--item-size)+var(--gap)) * 6);
 }
+@media screen and (width>1024px) {
+  :root {
+    --item-size: 288px;
+    --carousel-width: calc((var(--item-size)+var(--gap)) * 6);
+  }
+}
 .svgfilter {
   width: 0;
   height: 0;
   position: absolute;
-  border: 5px dotted chartreuse;
 }
 .preview-wrapper {
-  max-width: 400px;
+  max-width: var(--matrix-size);
   overflow: hidden;
-  border: 1px solid orange;
+  border: 2px solid var(--stroke-strong);
   background-image: url(/images/bg-trasparent.svg);
 }
 .preview-container {

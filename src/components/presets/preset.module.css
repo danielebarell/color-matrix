@@ -9,6 +9,11 @@
   scrollbar-color: var(--primary) var(--fill);
   margin-bottom: var(--xxs);
 }
+@media screen and (min-width: 1024px) {
+  .preset-wrapper {
+    height: calc(var(--screen-max-height) - 400px);
+  }
+}
 
 .preset-list {
   list-style: none;

@@ -2,6 +2,11 @@
   --matrix-max-width: 300px;
   --matrix-frame-min: var(--xxs);
 }
+@media screen and (width > 1023px) {
+  :root {
+    --matrix-max-width: var(--matrix-size);
+  }
+}
 
 .matrix-wrapper {
   display: grid;
@@ -60,6 +65,4 @@
   display: grid;
   grid-template-columns: subgrid;
   grid-template-rows: subgrid;
-  /**test*/
-  max-width: 300px;
 }

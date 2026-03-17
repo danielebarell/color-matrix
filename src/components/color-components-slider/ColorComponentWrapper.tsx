@@ -127,10 +127,7 @@ export default function ColorComponentWrapper() {
       undoable={commitedValues.length > 1}
       confirmable={isDirty.current}
       onExit={handleExit!}
-      hidden={
-        commitedValues.length === 1 &&
-        (commitedValues[0] === null || commitedValues[0] === undefined)
-      }
+      hidden={false}
       ccc={getCcCombinationByPosition(initPosition!)}
     >
       {/**
