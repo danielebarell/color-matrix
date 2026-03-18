@@ -36,7 +36,7 @@ const outOfBoundsAlert = (value: number): AlertMessage => ({
     <>
       <strong>{value}</strong> is very{" "}
       {value < -1 ? " low" : value > 1 ? " high" : ""}. Recommended range is (-1
-      to 1).
+      1).
     </>
   ),
 });

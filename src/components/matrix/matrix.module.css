@@ -2,7 +2,7 @@
   --matrix-max-width: 300px;
   --matrix-frame-min: var(--xxs);
 }
-@media screen and (width > 1023px) {
+@media screen and (min-width: 1024px) {
   :root {
     --matrix-max-width: var(--matrix-size);
   }

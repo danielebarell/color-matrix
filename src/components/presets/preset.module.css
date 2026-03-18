@@ -1,5 +1,4 @@
 .preset-wrapper {
-  height: 150px;
   min-height: 150px;
   overflow-y: auto;
   overflow-x: hidden;
@@ -11,7 +10,7 @@
 }
 @media screen and (min-width: 1024px) {
   .preset-wrapper {
-    height: calc(var(--screen-max-height) - 400px);
+    max-height: 250px;
   }
 }
 

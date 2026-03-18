@@ -1,5 +1,6 @@
 import "./App.css";
 import CodeWrapper from "./components/code/CodeWrapper.tsx";
+/**import CodeWrapper from "./components/code/CodeWrapper.tsx";**/
 import ColorComponentWrapper from "./components/color-components-slider/ColorComponentWrapper.tsx";
 import ImageSlider from "./components/image-slider/ImageSlider.tsx";
 import Matrix from "./components/matrix/Matrix.tsx";
@@ -23,13 +24,9 @@ function App() {
       <div className="slider-container">
         <ImageSlider />
       </div>
-      {/**<CodeWrapper /> */}
-      <button
-        className="btn btn-primary txt-main text-main--label"
-        onClick={() => console.log("CODE")}
-      >
-        Code
-      </button>
+      <div className="code-container">
+        <CodeWrapper />
+      </div>
     </main>
   );
 }

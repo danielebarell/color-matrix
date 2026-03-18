@@ -19,7 +19,7 @@
   font-size: 1.25rem;
   color: var(--text-strong);
 }
-@media screen and (width>1023px) {
+@media screen and (min-width: 1024px) {
   .text-main--product-name {
     font-size: 2rem;
   }

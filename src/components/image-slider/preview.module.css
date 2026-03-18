@@ -1,12 +1,12 @@
 :root {
   --item-size: 256px;
   --gap: 8px;
-  --carousel-width: calc((var(--item-size)+var(--gap)) * 6);
+  --carousel-width: calc((var(--item-size) + var(--gap)) * 6);
 }
-@media screen and (width>1024px) {
+@media screen and (min-width: 1024px) {
   :root {
-    --item-size: 288px;
-    --carousel-width: calc((var(--item-size)+var(--gap)) * 6);
+    --item-size: 128px;
+    --carousel-width: calc((var(--item-size) + var(--gap)) * 6);
   }
 }
 .svgfilter {
@@ -15,7 +15,7 @@
   position: absolute;
 }
 .preview-wrapper {
-  max-width: var(--matrix-size);
+  max-width: calc(var(--matrix-size) - 8px);
   overflow: hidden;
   border: 2px solid var(--stroke-strong);
   background-image: url(/images/bg-trasparent.svg);
@@ -48,23 +48,4 @@
   height: 100%;
   object-fit: cover;
   object-position: center;
-}
-
-@media screen and (width<1024px) {
-  :root {
-    --item-size: 128px;
-    --carousel-width: calc((var(--item-size)+8) * 6);
-  }
-  .preview-wrapper {
-    width: var(--carousel-width); /*bounding box: item width x3 perfetto*/
-    height: calc(
-      var(--item-size) * 2 + 12px
-    ); /*bounding box: item height x2 abbondante*/
-  }
-  .preview-container {
-    display: grid;
-    grid-template-columns: repeat(3, 1fr);
-    grid-template-rows: auto;
-    width: var(--carousel-width);
-  }
 }
