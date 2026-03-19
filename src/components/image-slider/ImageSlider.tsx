@@ -43,7 +43,7 @@ function ImageSlider() {
       // ⚠️ TEMP: attivo su desktop per sviluppo.
       // In produzione usare "(max-width: 1023px)"
       let mm = gsap.matchMedia();
-      mm.add("(min-width: 1024px)", () => {
+      mm.add("(min-width: 720px)", () => {
         console.log(container.current!.scrollWidth);
 
         const draggable = Draggable.create(container.current, {

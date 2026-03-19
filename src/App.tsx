@@ -9,7 +9,7 @@ import PresetListWrapper from "./components/presets/PresetListWrapper.tsx";
 function App() {
   return (
     <main className="main">
-      <header>
+      <header className="header">
         <h1 className="text-main text-main--product-name">
           color matrix studio
         </h1>
@@ -18,10 +18,8 @@ function App() {
         <ColorComponentWrapper />
         <PresetListWrapper />
       </div>
-      <div>
+      <div className="matrix">
         <Matrix />
-      </div>
-      <div className="slider-container">
         <ImageSlider />
       </div>
       <div className="code-container">

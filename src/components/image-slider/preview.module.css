@@ -3,9 +3,9 @@
   --gap: 8px;
   --carousel-width: calc((var(--item-size) + var(--gap)) * 6);
 }
-@media screen and (min-width: 1024px) {
+@media screen and (min-width: 720px) {
   :root {
-    --item-size: 128px;
+    --item-size: 185px;
     --carousel-width: calc((var(--item-size) + var(--gap)) * 6);
   }
 }
@@ -15,7 +15,7 @@
   position: absolute;
 }
 .preview-wrapper {
-  max-width: calc(var(--matrix-size) - 8px);
+  max-width: calc(var(--carousel-wrapper-width) - 8px);
   overflow: hidden;
   border: 2px solid var(--stroke-strong);
   background-image: url(/images/bg-trasparent.svg);

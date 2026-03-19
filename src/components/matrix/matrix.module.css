@@ -2,7 +2,7 @@
   --matrix-max-width: 300px;
   --matrix-frame-min: var(--xxs);
 }
-@media screen and (min-width: 1024px) {
+@media screen and (min-width: 720px) {
   :root {
     --matrix-max-width: var(--matrix-size);
   }
@@ -12,7 +12,7 @@
   display: grid;
   grid-template-columns: var(--matrix-frame-min) repeat(5, 1fr);
   grid-template-rows: var(--matrix-frame-min) repeat(4, 1fr);
-  max-width: calc(var(--matrix-frame-min) + var(--matrix-max-width));
+  width: calc(var(--matrix-frame-min) + var(--matrix-max-width));
   gap: var(--xxs);
   span.frame-w {
     height: 1px;
