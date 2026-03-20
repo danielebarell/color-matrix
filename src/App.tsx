@@ -1,3 +1,4 @@
+import { useEffect, useState } from "react";
 import "./App.css";
 import CodeWrapper from "./components/code/CodeWrapper.tsx";
 /**import CodeWrapper from "./components/code/CodeWrapper.tsx";**/
@@ -5,8 +6,13 @@ import ColorComponentWrapper from "./components/color-components-slider/ColorCom
 import ImageSlider from "./components/image-slider/ImageSlider.tsx";
 import Matrix from "./components/matrix/Matrix.tsx";
 import PresetListWrapper from "./components/presets/PresetListWrapper.tsx";
+import { LAYOUT_BREAKPOINT } from "./constants.ts";
+import useNarrowMediaQuery from "./hooks/useNarrowMediaQuery.ts";
+import Actions from "./components/actions/Actions.tsx";
 
 function App() {
+  const isNarrow = useNarrowMediaQuery(LAYOUT_BREAKPOINT);
+
   return (
     <main className="main">
       <header className="header">
@@ -14,17 +20,23 @@ function App() {
           color matrix studio
         </h1>
       </header>
-      <div className="sidebar">
-        <ColorComponentWrapper />
-        <PresetListWrapper />
-      </div>
+      {!isNarrow && (
+        <div className="sidebar">
+          <ColorComponentWrapper />
+          <PresetListWrapper />
+        </div>
+      )}
       <div className="matrix">
         <Matrix />
         <ImageSlider />
       </div>
-      <div className="code-container">
-        <CodeWrapper />
-      </div>
+      {isNarrow ? (
+        <Actions></Actions>
+      ) : (
+        <div className="code-container">
+          <CodeWrapper />
+        </div>
+      )}
     </main>
   );
 }

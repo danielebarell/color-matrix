@@ -40,36 +40,28 @@ function ImageSlider() {
   useGSAP(
     () => {
       if (!container.current || !wrapper.current) return;
-      // ⚠️ TEMP: attivo su desktop per sviluppo.
-      // In produzione usare "(max-width: 1023px)"
-      let mm = gsap.matchMedia();
-      mm.add("(min-width: 720px)", () => {
-        console.log(container.current!.scrollWidth);
 
-        const draggable = Draggable.create(container.current, {
-          type: "x",
-          inertia: true,
-          dragResistance: DRAG_RESISTENCE,
-          edgeResistance: EDGE_RESISTENCE,
-          minimumMovement: PIXEL_THRESHOLD,
-          bounds: {
-            minX: wrapper.current!.offsetWidth - container.current!.scrollWidth,
-            maxX: 0,
-          },
-          onClick(event) {
-            const target = event.target as
-              | HTMLImageElement
-              | HTMLPictureElement;
-            if (!target.dataset.imageId) return;
-            const { imageId } = target.dataset;
-            onItemSelect(imageId);
-          },
-        })[0];
-        // Cleanup draggable instance
-        return () => draggable.kill();
-      });
-      // Cleanup media
-      return () => mm.revert();
+      console.log(container.current!.scrollWidth);
+
+      const draggable = Draggable.create(container.current, {
+        type: "x",
+        inertia: true,
+        dragResistance: DRAG_RESISTENCE,
+        edgeResistance: EDGE_RESISTENCE,
+        minimumMovement: PIXEL_THRESHOLD,
+        bounds: {
+          minX: wrapper.current!.offsetWidth - container.current!.scrollWidth,
+          maxX: 0,
+        },
+        onClick(event) {
+          const target = event.target as HTMLImageElement | HTMLPictureElement;
+          if (!target.dataset.imageId) return;
+          const { imageId } = target.dataset;
+          onItemSelect(imageId);
+        },
+      })[0];
+      // Cleanup draggable instance
+      return () => draggable.kill();
     },
     { scope: wrapper },
   );

@@ -57,7 +57,6 @@ const Panel = ({
   onUndo,
   undoable,
   confirmable,
-  hidden = false,
   ccc = undefined,
 }: PanelProps) => {
   const handleExit = () => {
@@ -65,7 +64,7 @@ const Panel = ({
   };
 
   return (
-    <article className={styles.panel} style={{ opacity: hidden ? "0" : "1" }}>
+    <article className={styles.panel}>
       <header className={styles.header}>
         {onExit && (
           <button onClick={handleExit} className="btn-exit">

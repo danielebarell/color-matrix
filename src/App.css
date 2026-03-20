@@ -27,17 +27,12 @@
   --disabled-opacity: 0.3;
   --border-radius--4: 4px;
   --screen-max-height: 100vh;
-  --matrix-size: 200px;
+  --matrix-size: 350px;
   --app-width: 675px;
   --grid-panel-column-width: 297px;
   --carousel-wrapper-width: calc(
     var(--app-width) - var(--grid-panel-column-width) - var(--xxsmall-size)
   );
-}
-@media screen and (min-width: 720px) {
-  :root {
-    --matrix-size: 350px;
-  }
 }
 body {
   background-color: var(--dark);
@@ -49,7 +44,6 @@ body {
   gap: var(--xxs);
   grid-template-columns: 1fr var(--grid-panel-column-width);
   grid-template-rows: repeat(3, min-content);
-  height: var(--screen-max-height);
   .header {
     grid-column: 1 / -1;
   }
@@ -71,7 +65,29 @@ body {
     grid-column: 1 / -1;
   }
 }
-
+@media screen and (max-width: 719px) {
+  :root {
+    --app-width: 320px;
+    --carousel-wrapper-width: calc(var(--app-width) - var(--xxsmall-size));
+  }
+  body {
+    max-width: var(--app-width);
+    margin: 0 auto;
+  }
+  .main {
+    display: block;
+    .sidebar {
+      display: none;
+    }
+    .matrix {
+      margin: var(--xs) 0;
+    }
+    .sidebar,
+    .code-container {
+      display: none;
+    }
+  }
+}
 .btn {
   padding: 0.55rem 1rem;
   border-radius: var(--xxsmall-size);

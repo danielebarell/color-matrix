@@ -10,3 +10,7 @@ export const DRAG_RESISTENCE = 0.05;
  * draggable elaticity on borders
  */
 export const EDGE_RESISTENCE = 0.85;
+/**
+ * THRESHOLD between large and narrow layout for media query
+ */
+export const LAYOUT_BREAKPOINT = 720;

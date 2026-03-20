@@ -6,6 +6,7 @@ import presets, { type PresetId } from "../../data/presets-data";
 import { useState, useEffect, useRef } from "react";
 import useColorMatrixSelector from "../../hooks/useColormatrixSelector";
 import type { ColorMatrixRootState } from "../../store/store";
+import styles from "./preset.module.css";
 /**
  *
  * @returns A list of buttons (PresetList) within a Panel to set the whole matrix
@@ -60,7 +61,7 @@ export default function PresetListWrapper() {
       confirmable={isDirty.current}
       hidden={false}
     >
-      <div>
+      <div className={styles["list-wrapper"]}>
         <PresetList
           onSelect={handlePresetSelect}
           presets={presets}

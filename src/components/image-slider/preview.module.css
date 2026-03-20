@@ -1,12 +1,10 @@
 :root {
   --item-size: 256px;
   --gap: 8px;
-  --carousel-width: calc((var(--item-size) + var(--gap)) * 6);
 }
 @media screen and (min-width: 720px) {
   :root {
     --item-size: 185px;
-    --carousel-width: calc((var(--item-size) + var(--gap)) * 6);
   }
 }
 .svgfilter {
