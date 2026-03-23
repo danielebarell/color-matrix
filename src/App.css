@@ -39,6 +39,11 @@ body {
   max-width: var(--app-width);
   margin: 0 auto;
 }
+#panel-container {
+  position: absolute;
+  z-index: 10000;
+  top: 0;
+}
 .main {
   display: grid;
   gap: var(--xxs);

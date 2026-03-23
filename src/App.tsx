@@ -1,4 +1,3 @@
-import { useEffect, useState } from "react";
 import "./App.css";
 import CodeWrapper from "./components/code/CodeWrapper.tsx";
 /**import CodeWrapper from "./components/code/CodeWrapper.tsx";**/
