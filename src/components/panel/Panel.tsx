@@ -20,7 +20,6 @@ type PanelProps = PropsWithChildren & {
   onUndo?: () => void;
   undoable?: boolean;
   confirmable?: boolean;
-  hidden?: boolean;
   ccc?: ColorComponentCombination;
 };
 /**

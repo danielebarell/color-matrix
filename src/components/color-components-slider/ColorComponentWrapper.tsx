@@ -1,4 +1,5 @@
 import { useEffect, useRef, useState } from "react";
+import { createPortal } from "react-dom";
 import ColorComponentSlider, {
   type ColorComponentSliderApi,
 } from "./ColorComponentSlider";
@@ -17,6 +18,10 @@ import {
   setPresetId,
 } from "../../store/colormatrixSlice";
 
+type ColorComponentWrapperProps = {
+  isModal?: boolean;
+};
+type resetFn = "confirm" | "exit";
 /**
  *
  * @param position Position in the matrix
@@ -40,7 +45,10 @@ function getCcCombinationByPosition(
  * Coordinate Panel and ColorComponentSlider
  * (...will) Keep in sync with redux store
  */
-export default function ColorComponentWrapper() {
+export default function ColorComponentWrapper({
+  isModal = false,
+}: ColorComponentWrapperProps) {
+  const modalRef = useRef<HTMLDialogElement | null>(null);
   /**
    * array of values being set by the user used to make eventually undo action
    */
@@ -56,7 +64,7 @@ export default function ColorComponentWrapper() {
   const isDirty = useRef(false);
   const prevPositionRef = useRef<ColorMatrixPosition | null>(null);
   useEffect(() => {
-    //console.log("CHANGE POSITION", initPosition);
+    console.log("CHANGE POSITION", initPosition);
     if (prevPositionRef.current !== initPosition) {
       setCommitedValues([initValue!]);
       prevPositionRef.current = initPosition;
@@ -64,7 +72,9 @@ export default function ColorComponentWrapper() {
     if (initPosition === null) {
       isDirty.current = false;
     }
-  }, [initPosition, initValue, isDirty]);
+    if (!modalRef.current || initPosition === null) return;
+    modalRef.current.showModal();
+  }, [initPosition, initValue, isDirty, modalRef]);
   /**
    *
    */
@@ -90,17 +100,20 @@ export default function ColorComponentWrapper() {
       return newArr;
     });
   }
+  function reset(fn: resetFn) {
+    if (colorComponentSlider.current) colorComponentSlider.current[fn]();
+    dispatch(setPosition({ position: null }));
+    setCommitedValues([]);
+    if (!modalRef.current) return;
+    modalRef.current.close();
+  }
 
   function handleExit() {
-    if (colorComponentSlider.current) colorComponentSlider.current.exit();
     dispatch(setValue({ value: commitedValues[0] }));
-    dispatch(setPosition({ position: null }));
-    setCommitedValues([]);
+    reset("exit");
   }
   function handleConfirm() {
-    if (colorComponentSlider.current) colorComponentSlider.current.confirm();
-    dispatch(setPosition({ position: null }));
-    setCommitedValues([]);
+    reset("confirm");
   }
 
   function handleUndo() {
@@ -120,26 +133,34 @@ export default function ColorComponentWrapper() {
     dispatch(setValue({ value: lastValue }));
   }, [commitedValues]);
 
-  return (
-    <Panel
-      onConfirm={handleConfirm}
-      onUndo={handleUndo}
-      undoable={commitedValues.length > 1}
-      confirmable={isDirty.current}
-      onExit={handleExit!}
-      hidden={false}
-      ccc={getCcCombinationByPosition(initPosition!)}
-    >
-      {/**
+  function getPanel() {
+    return (
+      <Panel
+        onConfirm={handleConfirm}
+        onUndo={handleUndo}
+        undoable={commitedValues.length > 1}
+        confirmable={isDirty.current}
+        onExit={handleExit!}
+        ccc={getCcCombinationByPosition(initPosition!)}
+      >
+        {/**
        * hidden={
         commitedValues.length === 1 &&
         (commitedValues[0] === null || commitedValues[0] === undefined)
       }
        */}
-      <ColorComponentSlider
-        ref={colorComponentSlider}
-        onSliderChange={onSliderChange}
-      />
-    </Panel>
-  );
+        <ColorComponentSlider
+          ref={colorComponentSlider}
+          onSliderChange={onSliderChange}
+        />
+      </Panel>
+    );
+  }
+
+  return isModal
+    ? createPortal(
+        <dialog ref={modalRef}>{getPanel()}</dialog>,
+        document.querySelector("#panel-container")!,
+      )
+    : getPanel();
 }

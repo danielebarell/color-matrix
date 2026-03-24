@@ -3,13 +3,9 @@ import useColorMatrixSelector from "../../hooks/useColormatrixSelector";
 import type { ColorMatrixRootState } from "../../store/store";
 import Panel from "../panel/Panel";
 import Code from "./Code";
-import { type RefObject } from "react";
+import type { DialogableProps } from "../actions/Actions";
 
-type CodeWrapperProps = {
-  dialogRef?: RefObject<HTMLDialogElement | null>;
-};
-
-export default function CodeWrapper({ dialogRef }: CodeWrapperProps) {
+export default function CodeWrapper({ dialogRef }: DialogableProps) {
   const matrix = useColorMatrixSelector(
     (state: ColorMatrixRootState) => state.colorMatrix.matrix,
   );

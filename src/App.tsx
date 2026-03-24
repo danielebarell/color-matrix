@@ -1,6 +1,5 @@
 import "./App.css";
 import CodeWrapper from "./components/code/CodeWrapper.tsx";
-/**import CodeWrapper from "./components/code/CodeWrapper.tsx";**/
 import ColorComponentWrapper from "./components/color-components-slider/ColorComponentWrapper.tsx";
 import ImageSlider from "./components/image-slider/ImageSlider.tsx";
 import Matrix from "./components/matrix/Matrix.tsx";
@@ -19,7 +18,9 @@ function App() {
           color matrix studio
         </h1>
       </header>
-      {!isNarrow && (
+      {isNarrow ? (
+        <ColorComponentWrapper isModal={isNarrow}></ColorComponentWrapper>
+      ) : (
         <div className="sidebar">
           <ColorComponentWrapper />
           <PresetListWrapper />
@@ -30,7 +31,7 @@ function App() {
         <ImageSlider />
       </div>
       {isNarrow ? (
-        <Actions></Actions>
+        <Actions />
       ) : (
         <div className="code-container">
           <CodeWrapper />
