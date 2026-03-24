@@ -133,15 +133,16 @@ export default function ColorComponentWrapper({
     dispatch(setValue({ value: lastValue }));
   }, [commitedValues]);
 
-  function getPanel() {
+  function getPanel(exitable: boolean) {
     return (
       <Panel
         onConfirm={handleConfirm}
         onUndo={handleUndo}
         undoable={commitedValues.length > 1}
         confirmable={isDirty.current}
-        onExit={handleExit!}
+        onExit={exitable ? handleExit! : undefined}
         ccc={getCcCombinationByPosition(initPosition!)}
+        headerless={false}
       >
         {/**
        * hidden={
@@ -159,8 +160,8 @@ export default function ColorComponentWrapper({
 
   return isModal
     ? createPortal(
-        <dialog ref={modalRef}>{getPanel()}</dialog>,
+        <dialog ref={modalRef}>{getPanel(true)}</dialog>,
         document.querySelector("#panel-container")!,
       )
-    : getPanel();
+    : getPanel(false);
 }

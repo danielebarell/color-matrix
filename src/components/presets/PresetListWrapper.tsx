@@ -68,6 +68,7 @@ export default function PresetListWrapper({ dialogRef }: DialogableProps) {
         onExit={exitable ? handleExit : undefined}
         undoable={commitedPresets.length > 1}
         confirmable={isDirty.current}
+        headerless={!dialogRef}
       >
         <div className={styles["list-wrapper"]}>
           <PresetList

@@ -17,11 +17,13 @@ export default function CodeWrapper({ dialogRef }: DialogableProps) {
   if (dialogRef) {
     return createPortal(
       <dialog ref={dialogRef}>
-        <Panel onExit={handleExit}>{getCode()}</Panel>
+        <Panel onExit={handleExit} headerless={false}>
+          {getCode()}
+        </Panel>
       </dialog>,
       document.querySelector("#panel-container")!,
     );
   }
-  return <Panel>{getCode()}</Panel>;
+  return <Panel headerless={true}>{getCode()}</Panel>;
 }
 /**[1, 2, 3, 4, 5, 1, 2, 3, 4, 5, 1, 2, 3, 4, 5, 1, 2, 3, 4, 5] */

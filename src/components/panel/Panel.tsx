@@ -21,6 +21,7 @@ type PanelProps = PropsWithChildren & {
   undoable?: boolean;
   confirmable?: boolean;
   ccc?: ColorComponentCombination;
+  headerless?: boolean;
 };
 /**
  * icons for panel, they are two little balls signifiyng which color component is currently manipulating
@@ -56,6 +57,7 @@ const Panel = ({
   onUndo,
   undoable,
   confirmable,
+  headerless = false,
   ccc = undefined,
 }: PanelProps) => {
   const handleExit = () => {
@@ -64,14 +66,20 @@ const Panel = ({
 
   return (
     <article className={styles.panel}>
-      <header className={styles.header}>
-        {onExit && (
-          <button onClick={handleExit} className="btn-exit">
-            &times;
-          </button>
-        )}
-        {ccc && <ColorComponentCombinationIcons ccc={ccc} />}
-      </header>
+      {!headerless && (
+        <header
+          className={onExit || ccc ? styles.header : styles["header--dummy"]}
+        >
+          {onExit ? (
+            <button onClick={handleExit} className="btn-exit">
+              &times;
+            </button>
+          ) : (
+            <span>&nbsp;</span>
+          )}
+          {ccc && <ColorComponentCombinationIcons ccc={ccc} />}
+        </header>
+      )}
       <hr className={styles.separator} />
       <div className={styles.content}>
         <div>{children}</div>

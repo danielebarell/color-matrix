@@ -5,10 +5,14 @@
   transition: opacity var(--transition-time) ease-out;
 }
 .header {
+  min-height: var(--minimum-button-size);
   padding: 0 var(--xsmall-size);
   display: flex;
   justify-content: space-between;
   align-items: center;
+}
+.header--dummy {
+  min-height: var(--minimum-button-size);
 }
 .separator {
   height: 0;
