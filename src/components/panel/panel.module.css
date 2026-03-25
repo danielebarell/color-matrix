@@ -3,6 +3,13 @@
   border: var(--border-size) solid var(--stroke-weak);
   border-radius: var(--xxsmall-size);
   transition: opacity var(--transition-time) ease-out;
+  min-width: var(--grid-panel-column-width);
+}
+@media screen and (max-width: 719px) {
+  .panel {
+    width: var(--app-width);
+    min-height: calc(var(--app-width) - var(--xs));
+  }
 }
 .header {
   min-height: var(--minimum-button-size);
@@ -21,6 +28,9 @@
 }
 .content {
   padding: 0 var(--xsmall-size) var(--xsmall-size) var(--xsmall-size);
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
 }
 .actions {
   display: flex;

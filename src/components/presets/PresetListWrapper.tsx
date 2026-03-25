@@ -9,6 +9,11 @@ import type { ColorMatrixRootState } from "../../store/store";
 import styles from "./preset.module.css";
 import type { DialogableProps } from "../actions/Actions";
 import { createPortal } from "react-dom";
+
+function arrayLast<T>(a: Array<T>): T {
+  return a[a.length - 1];
+}
+
 /**
  *
  * @returns A list of buttons (PresetList) within a Panel to set the whole matrix
@@ -22,33 +27,38 @@ export default function PresetListWrapper({ dialogRef }: DialogableProps) {
     Array<PresetId | null>
   >([initPresetId]);
 
-  const isDirty = useRef(false);
-  function handleUndo() {
-    console.log("undo", commitedPresets);
-    setCommitedPresets((prev) => {
-      const newArr = [...prev];
-      newArr.pop();
-      return newArr;
-    });
-  }
-
-  function handleConfirm() {
-    isDirty.current = false;
-    setCommitedPresets((prev) => [[...prev].pop()!]);
-    if (dialogRef?.current) {
-      dialogRef.current.close();
-    }
-  }
   function handleExit() {
+    /**
+     * keep first preset and exit
+     */
+    const firstPreset = commitedPresets[0] || null;
+    setCommitedPresets([firstPreset]);
     dialogRef?.current?.close();
   }
+  function handleConfirm() {
+    /**
+     * keep last preset and exit
+     */
+    const currentPresetId = arrayLast(commitedPresets);
+    setCommitedPresets([currentPresetId]);
+    dialogRef?.current?.close();
+  }
+  function handleUndo() {
+    /**
+     * remove last preset
+     */
+    setCommitedPresets((prev) => {
+      const newPrs = [...prev];
+      newPrs.pop();
+      return newPrs;
+    });
+  }
   function handlePresetSelect(id: PresetId) {
-    isDirty.current = true;
     setCommitedPresets((prev) => [...prev, id]);
   }
   useEffect(() => {
-    console.log("...effect", commitedPresets);
-    const currentPresetId = commitedPresets[commitedPresets.length - 1];
+    console.log("presets", commitedPresets);
+    const currentPresetId = arrayLast(commitedPresets);
     dispatch(
       setPresetId({
         presetId: currentPresetId,
@@ -57,18 +67,20 @@ export default function PresetListWrapper({ dialogRef }: DialogableProps) {
   }, [commitedPresets]);
 
   useEffect(() => {
-    if (!initPresetId) setCommitedPresets((prev) => [...prev, null]);
+    if (!initPresetId) setCommitedPresets([null]);
   }, [initPresetId]);
 
-  const getPanel = (exitable: boolean = false) => {
+  const getPanel = (actionable: boolean = false) => {
     return (
       <Panel
-        onUndo={handleUndo}
-        onConfirm={handleConfirm}
-        onExit={exitable ? handleExit : undefined}
+        onExit={actionable ? handleExit : undefined}
+        headerless={!actionable}
+        onConfirm={actionable ? handleConfirm : undefined}
+        onUndo={actionable ? handleUndo : undefined}
         undoable={commitedPresets.length > 1}
-        confirmable={isDirty.current}
-        headerless={!dialogRef}
+        confirmable={
+          commitedPresets.length > 0 && arrayLast(commitedPresets) != null
+        }
       >
         <div className={styles["list-wrapper"]}>
           <PresetList

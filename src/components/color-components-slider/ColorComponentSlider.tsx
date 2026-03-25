@@ -94,6 +94,10 @@ export default function ColorComponentSlider({
     if (Math.abs(rawValue) > 1) setAlertMessage(outOfBoundsAlert(rawValue));
     else setAlertMessage(null);
   };
+  /**
+   * wheather controls are disbled
+   */
+  const [isDisabled, setIsDisabled] = useState(true);
   const operationTimer = useRef<number | null>(null);
   const precedentValue = useRef<number | null>(null);
   const draggingRef = useRef(false);
@@ -133,6 +137,12 @@ export default function ColorComponentSlider({
     }
     if (!draggingRef.current) checkOutOfBounds();
   }, [rawValue, inputField]);
+  /**
+   * set isDisabled state as an effect of rawValue not set
+   */
+  useEffect(() => {
+    setIsDisabled(rawValue === null || rawValue === undefined);
+  }, [setIsDisabled, rawValue]);
   /* ============================================================
    * API
    * ============================================================ */
@@ -245,9 +255,7 @@ export default function ColorComponentSlider({
         max={1.5}
         step={0.0001}
         onValueChange={handleSliderChange}
-        style={{
-          opacity: rawValue === null || rawValue === undefined ? 0.5 : 1,
-        }}
+        disabled={isDisabled}
       >
         <Slider.Track className={styles.Track} onPointerUp={handleThumbBlur}>
           <Slider.Range className={styles.Range} />
@@ -258,18 +266,14 @@ export default function ColorComponentSlider({
           onPointerUp={handleThumbBlur}
         />
       </Slider.Root>
-      <div
-        className={styles.stepper}
-        style={{
-          opacity: rawValue === null || rawValue === undefined ? 0.5 : 1,
-        }}
-      >
+      <div className={styles.stepper}>
         <button
           className="btn btn-primary --left"
           onPointerDown={() => handleOperation("minus")}
           onPointerLeave={handleOperationBlur}
           onPointerUp={handleOperationBlur}
           onContextMenu={(e) => e.preventDefault()}
+          disabled={isDisabled}
         >
           -
         </button>
@@ -280,6 +284,7 @@ export default function ColorComponentSlider({
           onFocus={handleInputFocus}
           onBlur={handleInputBlur}
           onKeyUp={handleInputReturn}
+          disabled={isDisabled}
         />
         <button
           className="btn btn-primary --right"
@@ -287,6 +292,7 @@ export default function ColorComponentSlider({
           onPointerLeave={handleOperationBlur}
           onPointerUp={handleOperationBlur}
           onContextMenu={(e) => e.preventDefault()}
+          disabled={isDisabled}
         >
           +
         </button>

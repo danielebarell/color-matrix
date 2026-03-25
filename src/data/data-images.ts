@@ -145,8 +145,8 @@ const nosignal: VectorImage = {
 // O(1) lookup instead of O(n)
 // =============================
 const imageRegistry: Readonly<Record<string, DataImage>> = {
-  johanna,
   tulips,
+  johanna,
   bride,
   tempest,
   valey,

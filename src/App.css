@@ -13,8 +13,7 @@
   --fill-gradient: linear-gradient(
     180deg,
     rgba(49, 58, 79, 1) 18%,
-    rgba(49, 58, 79, 0.85) 41%,
-    rgba(49, 58, 79, 0.85) 100%
+    rgba(49, 58, 79, 1) 100%
   );
   --minimum-thumb-size: 2.5rem;
   --minimum-button-size: 2.75rem;
@@ -39,6 +38,15 @@ body {
   max-width: var(--app-width);
   margin: 0 auto;
 }
+dialog {
+  position: absolute;
+  left: 50%;
+  transform: translateX(-50%);
+  background-color: transparent;
+  /*&::backdrop {
+    background-color: rgba(0, 0, 0, 0.7);
+  }*/
+}
 #panel-container {
   position: absolute;
   z-index: 10000;
@@ -55,9 +63,6 @@ body {
   .sidebar {
     grid-column: 2;
     grid-row: 2 / 3;
-    display: flex;
-    flex-direction: column;
-    justify-content: space-between;
   }
   .matrix {
     display: flex;
@@ -70,6 +75,7 @@ body {
     grid-column: 1 / -1;
   }
 }
+
 @media screen and (max-width: 719px) {
   :root {
     --app-width: 320px;

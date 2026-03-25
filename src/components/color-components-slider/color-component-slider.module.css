@@ -7,6 +7,10 @@
   width: 100%;
   height: calc(var(--minimum-thumb-size) + var(--xxsmall-size) * 2);
   margin: 8px 0;
+
+  &[data-disabled] {
+    opacity: var(--disabled-opacity);
+  }
 }
 
 .Track {
@@ -54,11 +58,16 @@
     width: auto;
     max-width: 5rem;
     padding: var(--minimum-size);
+    &:disabled {
+      opacity: var(--disabled-opacity);
+      border-top-color: transparent;
+      border-bottom-color: transparent;
+    }
   }
 }
 .alert {
   margin-bottom: var(--xxsmall-size);
-  min-height: var(--m);
+  min-height: calc(var(--l) + 5px);
   padding: var(--minimum-size) var(--xsmall-size);
   border-radius: var(--minimum-size);
   transition: color var(--transition-time) ease-out;
