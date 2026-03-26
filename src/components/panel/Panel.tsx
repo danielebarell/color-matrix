@@ -65,7 +65,7 @@ const Panel = ({
   };
 
   return (
-    <article className={styles.panel}>
+    <div className={styles.panel}>
       {!headerless && (
         <header
           className={onExit || ccc ? styles.header : styles["header--dummy"]}
@@ -104,7 +104,7 @@ const Panel = ({
           )}
         </div>
       </div>
-    </article>
+    </div>
   );
 };
 

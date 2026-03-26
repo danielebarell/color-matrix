@@ -67,7 +67,7 @@
 }
 .alert {
   margin-bottom: var(--xxsmall-size);
-  min-height: calc(var(--l) + 5px);
+  min-height: 56px;
   padding: var(--minimum-size) var(--xsmall-size);
   border-radius: var(--minimum-size);
   transition: color var(--transition-time) ease-out;

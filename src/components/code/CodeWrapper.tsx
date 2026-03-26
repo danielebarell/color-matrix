@@ -5,19 +5,15 @@ import Panel from "../panel/Panel";
 import Code from "./Code";
 import type { DialogableProps } from "../actions/Actions";
 
-export default function CodeWrapper({ dialogRef }: DialogableProps) {
+export default function CodeWrapper({ dialogRef, onExit }: DialogableProps) {
   const matrix = useColorMatrixSelector(
     (state: ColorMatrixRootState) => state.colorMatrix.matrix,
   );
-  const handleExit = () => {
-    if (!dialogRef?.current) return;
-    dialogRef?.current.close();
-  };
   const getCode = () => <Code values={matrix} />;
   if (dialogRef) {
     return createPortal(
       <dialog ref={dialogRef}>
-        <Panel onExit={handleExit} headerless={false}>
+        <Panel onExit={onExit} headerless={false}>
           {getCode()}
         </Panel>
       </dialog>,

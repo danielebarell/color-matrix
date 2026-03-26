@@ -18,7 +18,10 @@ function arrayLast<T>(a: Array<T>): T {
  *
  * @returns A list of buttons (PresetList) within a Panel to set the whole matrix
  */
-export default function PresetListWrapper({ dialogRef }: DialogableProps) {
+export default function PresetListWrapper({
+  dialogRef,
+  onExit,
+}: DialogableProps) {
   const initPresetId = useColorMatrixSelector(
     (state: ColorMatrixRootState) => state.colorMatrix.presetId,
   );
@@ -33,7 +36,7 @@ export default function PresetListWrapper({ dialogRef }: DialogableProps) {
      */
     const firstPreset = commitedPresets[0] || null;
     setCommitedPresets([firstPreset]);
-    dialogRef?.current?.close();
+    onExit!();
   }
   function handleConfirm() {
     /**
@@ -41,7 +44,7 @@ export default function PresetListWrapper({ dialogRef }: DialogableProps) {
      */
     const currentPresetId = arrayLast(commitedPresets);
     setCommitedPresets([currentPresetId]);
-    dialogRef?.current?.close();
+    onExit!();
   }
   function handleUndo() {
     /**
@@ -76,7 +79,7 @@ export default function PresetListWrapper({ dialogRef }: DialogableProps) {
         onExit={actionable ? handleExit : undefined}
         headerless={!actionable}
         onConfirm={actionable ? handleConfirm : undefined}
-        onUndo={actionable ? handleUndo : undefined}
+        onUndo={false ? handleUndo : undefined}
         undoable={commitedPresets.length > 1}
         confirmable={
           commitedPresets.length > 0 && arrayLast(commitedPresets) != null

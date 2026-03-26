@@ -134,7 +134,7 @@ export default function ColorComponentWrapper({
     return (
       <Panel
         onConfirm={handleConfirm}
-        onUndo={handleUndo}
+        onUndo={undefined}
         undoable={commitedValues.length > 1}
         confirmable={isDirty.current}
         onExit={exitable ? handleExit! : undefined}

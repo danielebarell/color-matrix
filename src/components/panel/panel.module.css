@@ -34,6 +34,7 @@
 }
 .actions {
   display: flex;
+  align-content: flex-end;
   gap: var(--xsmall-size);
 }
 .color-components {
