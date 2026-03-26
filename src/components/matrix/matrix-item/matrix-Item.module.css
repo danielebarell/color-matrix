@@ -35,4 +35,20 @@
       cursor: default;
     }
   }
+  &.disabled {
+    opacity: var(--disabled-opacity);
+    border-color: var(--stroke-weak);
+    .cell-value {
+      color: var(--text-strong);
+      cursor: default;
+      border: none;
+    }
+    &:hover {
+      border-color: var(--stroke-weak);
+    }
+    &:active {
+      background-color: var(--fill);
+      border-color: var(--stroke-weak);
+    }
+  }
 }

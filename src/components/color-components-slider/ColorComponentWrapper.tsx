@@ -17,6 +17,7 @@ import {
   setValue,
   setPresetId,
 } from "../../store/colormatrixSlice";
+import { useUIStore } from "../../hooks/useUIStore";
 
 type ColorComponentWrapperProps = {
   isModal?: boolean;
@@ -58,6 +59,8 @@ export default function ColorComponentWrapper({
   const initPosition = useColorMatrixSelector(
     (state: ColorMatrixRootState) => state.colorMatrix.position,
   );
+  const dialogStateOpen = useUIStore((state) => state.openPanel);
+  const dialogStateClose = useUIStore((state) => state.closePanel);
   /**
    * if the slider hes been used so it's confirmable
    */
@@ -72,7 +75,8 @@ export default function ColorComponentWrapper({
       isDirty.current = false;
     }
     if (!modalRef.current || initPosition === null) return;
-    modalRef.current.showModal();
+    modalRef.current.show();
+    dialogStateOpen("dialog");
   }, [initPosition, initValue, isDirty, modalRef]);
   /**
    *
@@ -103,6 +107,7 @@ export default function ColorComponentWrapper({
     setCommitedValues([]);
     if (!modalRef.current) return;
     modalRef.current.close();
+    dialogStateClose("dialog");
   }
 
   function handleExit() {

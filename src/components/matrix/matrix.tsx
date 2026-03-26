@@ -1,6 +1,7 @@
 import type { ColorMatrixPosition } from "../../data/presets-data";
 import useColorMatrixDispatch from "../../hooks/useColormatrixDispatch";
 import useColorMatrixSelector from "../../hooks/useColormatrixSelector";
+import { useUIStore } from "../../hooks/useUIStore";
 import { setPosition } from "../../store/colormatrixSlice";
 import type { ColorMatrixRootState } from "../../store/store";
 import MatrixItem from "./matrix-item/MatrixItem";
@@ -11,6 +12,7 @@ export default function Matrix() {
   const position = useColorMatrixSelector(
     (state: ColorMatrixRootState) => state.colorMatrix.position,
   );
+  const isDialogOpen = useUIStore((state) => state.panels.dialog);
   useEffect(() => {
     setSelectedPosition(position);
   }, [position]);
@@ -24,7 +26,7 @@ export default function Matrix() {
   const [selectedPostion, setSelectedPosition] =
     useState<ColorMatrixPosition | null>(null);
   return (
-    <section className={styles["matrix-wrapper"]}>
+    <section className={`${styles["matrix-wrapper"]}`}>
       <span></span>
       <span className={`${styles["frame-w"]} ${styles["--red"]}`}></span>
       <span className={`${styles["frame-w"]} ${styles["--green"]}`}></span>
@@ -43,6 +45,7 @@ export default function Matrix() {
             key={index}
             onItemSelected={handleItemSelected}
             selected={selectedPostion === index}
+            disabled={isDialogOpen}
           />
         ))}
       </div>
