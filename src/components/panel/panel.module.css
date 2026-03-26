@@ -7,7 +7,7 @@
 }
 @media screen and (max-width: 719px) {
   .panel {
-    width: var(--app-width);
+    width: var(--panel-width);
     min-height: calc(var(--app-width) - var(--xs));
   }
 }

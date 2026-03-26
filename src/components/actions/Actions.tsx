@@ -1,5 +1,5 @@
 import styles from "./actions.module.css";
-import { useRef, useState, type RefObject } from "react";
+import { useRef, type RefObject } from "react";
 import CodeWrapper from "../code/CodeWrapper";
 import PresetListWrapper from "../presets/PresetListWrapper";
 import { useUIStore } from "../../hooks/useUIStore";

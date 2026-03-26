@@ -1,4 +1,8 @@
 .actions {
   display: flex;
   gap: var(--xs);
+  position: sticky;
+  background-color: var(--dark);
+  bottom: 0;
+  outline: 5px solid var(--dark);
 }

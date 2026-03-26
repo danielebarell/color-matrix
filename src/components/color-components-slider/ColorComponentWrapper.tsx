@@ -118,7 +118,7 @@ export default function ColorComponentWrapper({
     reset("confirm");
   }
 
-  function handleUndo() {
+  /*function handleUndo() {
     console.log("torna indietro", commitedValues.length);
     if (commitedValues.length > 0)
       setCommitedValues((prev) => {
@@ -126,7 +126,7 @@ export default function ColorComponentWrapper({
         newArr.pop();
         return newArr;
       });
-  }
+  }*/
   useEffect(() => {
     //console.log("...effect", commitedValues);
     const lastValue = commitedValues[commitedValues.length - 1];

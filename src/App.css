@@ -40,12 +40,8 @@ body {
 }
 dialog {
   position: absolute;
-  left: 50%;
-  transform: translateX(-50%);
+  left: calc(50% + var(--xxs));
   background-color: transparent;
-  /*&::backdrop {
-    background-color: rgba(0, 0, 0, 0.7);
-  }*/
 }
 #panel-container {
   position: absolute;
@@ -79,6 +75,7 @@ dialog {
 @media screen and (max-width: 719px) {
   :root {
     --app-width: 320px;
+    --panel-width: calc(var(--app-width) - var(--m));
     --carousel-wrapper-width: calc(var(--app-width) - var(--xxsmall-size));
   }
   body {
