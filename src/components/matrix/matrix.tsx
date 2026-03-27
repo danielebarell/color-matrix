@@ -8,11 +8,23 @@ import MatrixItem from "./matrix-item/MatrixItem";
 import styles from "./matrix.module.css";
 import { useEffect, useState } from "react";
 
+const colors = ["red", "green", "blue", "alpha", "plus"] as const;
+type Colors = (typeof colors)[number];
+const orientation = ["w", "h"] as const;
+type Orientation = (typeof orientation)[number];
+
 export default function Matrix() {
+  const [selectedPostion, setSelectedPosition] =
+    useState<ColorMatrixPosition | null>(null);
   const position = useColorMatrixSelector(
     (state: ColorMatrixRootState) => state.colorMatrix.position,
   );
   const isDialogOpen = useUIStore((state) => state.panels.dialog);
+  const isColorComponentEnabled = useUIStore(
+    (state) => state.panels.colorComponent,
+  );
+  const disablePanel = useUIStore((state) => state.closePanel);
+  const enablePanel = useUIStore((state) => state.openPanel);
   useEffect(() => {
     setSelectedPosition(position);
   }, [position]);
@@ -20,16 +32,25 @@ export default function Matrix() {
     (state: ColorMatrixRootState) => state.colorMatrix.matrix,
   );
   const dispatch = useColorMatrixDispatch();
-  function handleItemSelected(position: ColorMatrixPosition) {
-    dispatch(setPosition({ position }));
+  function handleItemSelected(pos: ColorMatrixPosition) {
+    console.log("selected pos:", pos);
+    //se il click avviene sulla medesima posizione dell'item selezionato....
+    if (selectedPostion === pos && isColorComponentEnabled) {
+      console.log("disbilita item");
+      setSelectedPosition(null);
+      disablePanel("colorComponent");
+      return;
+    }
+    dispatch(setPosition({ position: pos }));
+    enablePanel("colorComponent");
+    setSelectedPosition(pos);
   }
-  const [selectedPostion, setSelectedPosition] =
-    useState<ColorMatrixPosition | null>(null);
 
   function getSticker(
-    orientation: "w" | "h",
-    cc: "red" | "green" | "blue" | "alpha" | "plus",
+    orientation: Orientation,
+    cc: Colors,
     disabled: boolean,
+    key: string,
   ) {
     if (cc === "plus" && orientation === "h")
       throw new Error("this color combination doesn't exist");
@@ -40,20 +61,24 @@ export default function Matrix() {
     if (disabled) {
       classes = `${classes} ${styles.disabled}`;
     }
-    return <span className={classes} />;
+    return <span className={classes} key={key} />;
+  }
+  function getStickerList(orientation: Orientation) {
+    const myColors = [...colors];
+    //Se ci muoviamo in altezza rimuovi il 'plus' - cioè il numero 1.
+    if (orientation === "h") {
+      const plusIndex = myColors.indexOf("plus");
+      myColors.splice(plusIndex, 1);
+    }
+    return myColors.map((value, i) =>
+      getSticker(orientation, value, isDialogOpen, `${orientation}-${i}`),
+    );
   }
   return (
     <section className={`${styles["matrix-wrapper"]}`}>
       <span></span>
-      {getSticker("w", "red", isDialogOpen)}
-      {getSticker("w", "green", isDialogOpen)}
-      {getSticker("w", "blue", isDialogOpen)}
-      {getSticker("w", "alpha", isDialogOpen)}
-      {getSticker("w", "plus", isDialogOpen)}
-      {getSticker("h", "red", isDialogOpen)}
-      {getSticker("h", "green", isDialogOpen)}
-      {getSticker("h", "blue", isDialogOpen)}
-      {getSticker("h", "alpha", isDialogOpen)}
+      {getStickerList("w")}
+      {getStickerList("h")}
       <div className={styles["matrix-table"]}>
         {colorComponents.map((value, index) => (
           <MatrixItem

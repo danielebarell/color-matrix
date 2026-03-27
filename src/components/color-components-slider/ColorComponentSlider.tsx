@@ -22,6 +22,7 @@ export type ColorComponentSliderApi = {
   undo: (lastValue: number) => void;
   confirm: () => void;
   exit: () => void;
+  disable: (dis?: boolean) => void;
 };
 type ColorComponentSliderProps = {
   onSliderChange: (value: number) => void;
@@ -89,6 +90,9 @@ export default function ColorComponentSlider({
    * alert messages: errors and warnings
    */
   const [alertMessage, setAlertMessage] = useState<AlertMessage | null>(null);
+  useEffect(() => {
+    //dummy effect....
+  }, [alertMessage]);
   const checkOutOfBounds = () => {
     if (rawValue === null) return;
     if (Math.abs(rawValue) > 1) setAlertMessage(outOfBoundsAlert(rawValue));
@@ -153,13 +157,18 @@ export default function ColorComponentSlider({
         precedentValue.current = value;
       },
       confirm() {
-        console.log("CONFIRM");
         setAlertMessage(null);
       },
       exit() {
-        console.log("EXIT");
         setAlertMessage(null);
         setRawValue(0);
+      },
+      disable(dis: boolean = true) {
+        if (dis) {
+          setRawValue(null);
+          setAlertMessage(null);
+        }
+        setIsDisabled(dis);
       },
     };
   }, [setRawValue, setAlertMessage]);
@@ -297,11 +306,11 @@ export default function ColorComponentSlider({
           +
         </button>
       </div>
-      <div
+      {/*<div
         className={`${styles.alert} ${alertMessage ? (alertMessage?.level === "error" ? styles["--error"] : styles["--warning"]) : ""}`}
       >
         {alertMessage?.message!}
-      </div>
+      </div>*/}
     </>
   );
 }

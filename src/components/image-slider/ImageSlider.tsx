@@ -15,7 +15,7 @@ import {
   DRAG_RESISTENCE,
   EDGE_RESISTENCE,
 } from "../../constants";
-import styles from "./preview.module.css";
+import styles from "./image-slider.module.css";
 import useColorMatrixSelector from "../../hooks/useColormatrixSelector";
 
 gsap.registerPlugin(Draggable, InertiaPlugin);
@@ -28,7 +28,7 @@ function ImageSlider() {
    */
   const matrixValue = useColorMatrixSelector(
     (state) => state.colorMatrix.matrix,
-  ).reduce((previous, current) => previous + " " + current, "");
+  ).join(" ");
   /**
    * Holds the selected image for the panel.
    * If null → panel is closed.
@@ -116,7 +116,7 @@ function ImageSlider() {
             dataImage={panelSelectedImage}
             onExit={handleClosePanel}
           />,
-          document.body,
+          document.querySelector("#panel-container")!,
         )}
     </>
   );

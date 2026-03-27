@@ -4,7 +4,7 @@
 }
 @media screen and (min-width: 720px) {
   :root {
-    --item-size: 185px;
+    --item-size: 210px;
   }
 }
 .svgfilter {

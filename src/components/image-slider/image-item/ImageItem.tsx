@@ -2,7 +2,7 @@ import type { DataImage, VectorImage } from "../../../data/data-images";
 export type ImageItemProps = {
   dataImage: DataImage;
 };
-import styles from "../preview.module.css";
+import styles from "../image-slider.module.css";
 
 export default function ImageItem({ dataImage }: ImageItemProps) {
   const { type } = dataImage;

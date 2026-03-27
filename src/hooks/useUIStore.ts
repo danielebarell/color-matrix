@@ -3,6 +3,7 @@ import { create } from "zustand";
 type Panels = {
   dialog: boolean;
   image: boolean;
+  colorComponent: boolean;
 };
 type UIState = {
   panels: Panels;
@@ -14,6 +15,7 @@ export const useUIStore = create<UIState>((set) => ({
   panels: {
     dialog: false,
     image: false,
+    colorComponent: false,
   },
   openPanel(panel) {
     return set((state) => ({

@@ -2,6 +2,7 @@
   display: flex;
   gap: var(--xs);
   position: sticky;
+  z-index: 10000;
   background-color: var(--dark);
   bottom: 0;
   outline: 5px solid var(--dark);

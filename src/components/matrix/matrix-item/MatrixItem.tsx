@@ -9,7 +9,7 @@ type MatrixItemProps = {
 };
 export default function MatrixItem(props: MatrixItemProps) {
   function handleClick() {
-    if (props.selected || props.disabled) return;
+    if (props.disabled) return;
     props.onItemSelected(props.position);
   }
 

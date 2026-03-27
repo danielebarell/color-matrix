@@ -3,7 +3,8 @@
 }
 
 .preset-wrapper {
-  max-height: 168px;
+  height: 100%;
+  max-height: 299px;
   overflow-y: auto;
   overflow-x: hidden;
   scroll-behavior: auto;

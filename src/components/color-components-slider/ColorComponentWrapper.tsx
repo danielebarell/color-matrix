@@ -12,11 +12,7 @@ import { colorComponentValues } from "../panel/Panel";
 import useColorMatrixSelector from "../../hooks/useColormatrixSelector";
 import type { ColorMatrixRootState } from "../../store/store";
 import useColorMatrixDispatch from "../../hooks/useColormatrixDispatch";
-import {
-  setPosition,
-  setValue,
-  setPresetId,
-} from "../../store/colormatrixSlice";
+import { setPosition, setValue } from "../../store/colormatrixSlice";
 import { useUIStore } from "../../hooks/useUIStore";
 
 type ColorComponentWrapperProps = {
@@ -61,23 +57,28 @@ export default function ColorComponentWrapper({
   );
   const dialogStateOpen = useUIStore((state) => state.openPanel);
   const dialogStateClose = useUIStore((state) => state.closePanel);
-  /**
-   * if the slider hes been used so it's confirmable
-   */
-  const isDirty = useRef(false);
+  //
+  const isColorComponentEnabled = useUIStore(
+    (state) => state.panels.colorComponent,
+  );
   const prevPositionRef = useRef<ColorMatrixPosition | null>(null);
   useEffect(() => {
     if (prevPositionRef.current !== initPosition) {
       setCommitedValues([initValue!]);
       prevPositionRef.current = initPosition;
     }
-    if (initPosition === null) {
-      isDirty.current = false;
-    }
     if (!modalRef.current || initPosition === null) return;
     modalRef.current.show();
     dialogStateOpen("dialog");
-  }, [initPosition, initValue, isDirty, modalRef]);
+  }, [initPosition, initValue, modalRef]);
+  //
+  useEffect(() => {
+    if (isColorComponentEnabled) {
+      colorComponentSlider.current?.disable(false);
+    } else {
+      colorComponentSlider.current?.disable();
+    }
+  }, [isColorComponentEnabled]);
   /**
    *
    */
@@ -85,21 +86,8 @@ export default function ColorComponentWrapper({
   const dispatch = useColorMatrixDispatch();
   const colorComponentSlider = useRef<ColorComponentSliderApi | null>(null);
   function onSliderChange(value: number) {
-    if (isDirty.current) {
-      dispatch(setPresetId({ presetId: null }));
-    }
     if (value === null || value === undefined) return;
-    isDirty.current = true;
     dispatch(setValue({ value }));
-    addCommitedValue(value);
-  }
-  function addCommitedValue(value: number) {
-    setCommitedValues((prev) => {
-      const newArr = [...prev];
-      if (newArr[0] === null || newArr[0] === undefined) newArr.shift();
-      newArr.push(value);
-      return newArr;
-    });
   }
   function reset(fn: resetFn) {
     if (colorComponentSlider.current) colorComponentSlider.current[fn]();
@@ -117,31 +105,13 @@ export default function ColorComponentWrapper({
   function handleConfirm() {
     reset("confirm");
   }
-
-  /*function handleUndo() {
-    console.log("torna indietro", commitedValues.length);
-    if (commitedValues.length > 0)
-      setCommitedValues((prev) => {
-        const newArr = [...prev];
-        newArr.pop();
-        return newArr;
-      });
-  }*/
-  useEffect(() => {
-    //console.log("...effect", commitedValues);
-    const lastValue = commitedValues[commitedValues.length - 1];
-    if (colorComponentSlider.current)
-      colorComponentSlider.current.undo(lastValue);
-    dispatch(setValue({ value: lastValue }));
-  }, [commitedValues]);
-
   function getPanel(exitable: boolean) {
     return (
       <Panel
-        onConfirm={handleConfirm}
+        onConfirm={exitable ? handleConfirm : undefined}
         onUndo={undefined}
         undoable={commitedValues.length > 1}
-        confirmable={isDirty.current}
+        confirmable={exitable}
         onExit={exitable ? handleExit! : undefined}
         ccc={getCcCombinationByPosition(initPosition!)}
         headerless={false}
