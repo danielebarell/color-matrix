@@ -11,10 +11,11 @@ import { Slider } from "radix-ui";
 import { type ColorMatrixRootState } from "../../store/store";
 import useColorMatrixSelector from "../../hooks/useColormatrixSelector";
 import styles from "./color-component-slider.module.css";
+import Popover from "../popover/Popover";
 
 type Operation = "minus" | "plus";
-type AlertLevel = "warning" | "error";
-type AlertMessage = {
+export type AlertLevel = "warning" | "error";
+export type AlertMessage = {
   message: ReactNode;
   level: AlertLevel;
 };
@@ -91,9 +92,7 @@ export default function ColorComponentSlider({
    * alert messages: errors and warnings
    */
   const [alertMessage, setAlertMessage] = useState<AlertMessage | null>(null);
-  useEffect(() => {
-    //dummy effect....
-  }, [alertMessage]);
+
   const checkOutOfBounds = () => {
     if (rawValue === null) return;
     if (Math.abs(rawValue) > 1) setAlertMessage(outOfBoundsAlert(rawValue));
@@ -308,6 +307,7 @@ export default function ColorComponentSlider({
           +
         </button>
       </div>
+      <Popover message={alertMessage?.message} level={alertMessage?.level!} />
       {/*<div
         className={`${styles.alert} ${alertMessage ? (alertMessage?.level === "error" ? styles["--error"] : styles["--warning"]) : ""}`}
       >
