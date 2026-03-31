@@ -36,9 +36,9 @@ export default function Matrix() {
     console.log("selected pos:", pos);
     //se il click avviene sulla medesima posizione dell'item selezionato....
     if (selectedPostion === pos && isColorComponentEnabled) {
-      console.log("disbilita item");
-      setSelectedPosition(null);
       disablePanel("colorComponent");
+      setSelectedPosition(null);
+      dispatch(setPosition({ position: null }));
       return;
     }
     dispatch(setPosition({ position: pos }));

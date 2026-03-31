@@ -60,7 +60,6 @@ export default function PresetListWrapper({
     setCommitedPresets((prev) => [...prev, id]);
   }
   useEffect(() => {
-    console.log("presets", commitedPresets);
     const currentPresetId = arrayLast(commitedPresets);
     dispatch(
       setPresetId({

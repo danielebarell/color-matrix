@@ -77,6 +77,7 @@ export default function ColorComponentSlider({
   /**
    * raw value from controls inside component
    */
+
   const [rawValue, setRawValue] = useState<number | null>(null);
   /**
    * input value management imperatively from input field
@@ -109,6 +110,7 @@ export default function ColorComponentSlider({
    * Effects
    * ============================================================ */
   useEffect(() => {
+    console.log("currentValue", currentValue);
     setRawValue(currentValue);
     precedentValue.current = currentValue;
     onSliderChange(currentValue!);

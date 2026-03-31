@@ -48,3 +48,6 @@
     background-position-y: 0;
   }
 }
+.hide {
+  opacity: 0;
+}

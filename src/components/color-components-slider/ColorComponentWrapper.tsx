@@ -4,6 +4,7 @@ import ColorComponentSlider, {
   type ColorComponentSliderApi,
 } from "./ColorComponentSlider";
 import Panel, {
+  type ColorComponentCombinationIconsAPI,
   type ColorComponent,
   type ColorComponentCombination,
 } from "../panel/Panel";
@@ -62,7 +63,9 @@ export default function ColorComponentWrapper({
     (state) => state.panels.colorComponent,
   );
   const prevPositionRef = useRef<ColorMatrixPosition | null>(null);
+  const cccRef = useRef<ColorComponentCombinationIconsAPI>(null!);
   useEffect(() => {
+    console.log("initPosition", initPosition, "initValue", initValue);
     if (prevPositionRef.current !== initPosition) {
       setCommitedValues([initValue!]);
       prevPositionRef.current = initPosition;
@@ -70,15 +73,18 @@ export default function ColorComponentWrapper({
     if (!modalRef.current || initPosition === null) return;
     modalRef.current.show();
     dialogStateOpen("dialog");
-  }, [initPosition, initValue, modalRef]);
+  }, [initPosition, initValue, modalRef, prevPositionRef]);
   //
   useEffect(() => {
+    if (!cccRef.current) return;
     if (isColorComponentEnabled) {
       colorComponentSlider.current?.disable(false);
+      cccRef.current.show();
     } else {
       colorComponentSlider.current?.disable();
+      cccRef.current.hide();
     }
-  }, [isColorComponentEnabled]);
+  }, [isColorComponentEnabled, cccRef]);
   /**
    *
    */
@@ -115,6 +121,7 @@ export default function ColorComponentWrapper({
         onExit={exitable ? handleExit! : undefined}
         ccc={getCcCombinationByPosition(initPosition!)}
         headerless={false}
+        cccRef={cccRef}
       >
         <ColorComponentSlider
           ref={colorComponentSlider}

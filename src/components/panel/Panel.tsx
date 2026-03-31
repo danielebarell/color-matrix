@@ -1,4 +1,9 @@
-import type { PropsWithChildren } from "react";
+import {
+  useImperativeHandle,
+  useState,
+  type PropsWithChildren,
+  type RefObject,
+} from "react";
 import styles from "./panel.module.css";
 export type ColorComponent = "R" | "G" | "B" | "A" | "1";
 
@@ -22,25 +27,42 @@ type PanelProps = PropsWithChildren & {
   confirmable?: boolean;
   ccc?: ColorComponentCombination;
   headerless?: boolean;
+  cccRef?: RefObject<ColorComponentCombinationIconsAPI>;
+};
+export type ColorComponentCombinationIconsAPI = {
+  show: () => void;
+  hide: () => void;
 };
 /**
  * icons for panel, they are two little balls signifiyng which color component is currently manipulating
  */
 const ColorComponentCombinationIcons: React.FC<{
   ccc: ColorComponentCombination;
-}> = ({ ccc }) => {
+  ref: RefObject<ColorComponentCombinationIconsAPI | undefined>;
+}> = ({ ccc, ref }) => {
+  const [visible, setVisible] = useState(false);
+  useImperativeHandle(ref, () => ({
+    show() {
+      setVisible(true);
+    },
+    hide() {
+      setVisible(false);
+    },
+  }));
+
   function getCcStyle(cc: ColorComponentUnion) {
     const iconYPosition = colorComponentValues.indexOf(cc) + 1;
     const MARGIN = 15;
     const HEIGHT = 16;
     const iconY = iconYPosition * (MARGIN + HEIGHT) * -1;
-
     return {
       backgroundPositionY: `${iconY}px`,
     };
   }
   return (
-    <div className={styles["color-components"]}>
+    <div
+      className={`${styles["color-components"]} ${visible ? "" : styles.hide}`}
+    >
       <span style={getCcStyle(ccc.row)}></span>
       <span style={getCcStyle(ccc.column)}></span>
     </div>
@@ -57,13 +79,13 @@ const Panel = ({
   onUndo,
   undoable,
   confirmable,
+  cccRef = undefined,
   headerless = false,
   ccc = undefined,
 }: PanelProps) => {
   const handleExit = () => {
     if (onExit) onExit();
   };
-
   return (
     <div className={styles.panel}>
       {!headerless && (
@@ -77,7 +99,9 @@ const Panel = ({
           ) : (
             <span>&nbsp;</span>
           )}
-          {ccc && <ColorComponentCombinationIcons ccc={ccc} />}
+          {ccc && cccRef && (
+            <ColorComponentCombinationIcons ccc={ccc} ref={cccRef!} />
+          )}
         </header>
       )}
       <hr className={styles.separator} />
