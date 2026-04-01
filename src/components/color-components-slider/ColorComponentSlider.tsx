@@ -46,8 +46,11 @@ const wrongCharacterAlert = (inputValue: string): AlertMessage => ({
   level: "error",
   message: (
     <>
-      <strong>{inputValue}</strong> is not permitted. The only enabled
-      characters are: <strong>numbers</strong>, <strong>full-stop (.)</strong>,{" "}
+      <strong>
+        <i>"{inputValue}"</i>
+      </strong>{" "}
+      is not permitted. The only enabled characters are:{" "}
+      <strong>numbers</strong>, <strong>full-stop (.)</strong>,{" "}
       <strong>coma (,)</strong> and <strong>minus (-)</strong>
     </>
   ),
@@ -308,11 +311,6 @@ export default function ColorComponentSlider({
         </button>
       </div>
       <Popover message={alertMessage?.message} level={alertMessage?.level!} />
-      {/*<div
-        className={`${styles.alert} ${alertMessage ? (alertMessage?.level === "error" ? styles["--error"] : styles["--warning"]) : ""}`}
-      >
-        {alertMessage?.message!}
-      </div>*/}
     </>
   );
 }

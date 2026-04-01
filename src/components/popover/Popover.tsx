@@ -1,5 +1,8 @@
 import styles from "./popover.module.css";
-import type { AlertMessage } from "../color-components-slider/ColorComponentSlider";
+import type {
+  AlertLevel,
+  AlertMessage,
+} from "../color-components-slider/ColorComponentSlider";
 import { useEffect, useState } from "react";
 
 const Popover = ({ message, level }: AlertMessage) => {
@@ -20,7 +23,9 @@ const Popover = ({ message, level }: AlertMessage) => {
   };
 
   return (
-    <div className={`${isHidden ? styles["no-baloon"] : styles.baloon}`}>
+    <div
+      className={`${isHidden ? styles["no-baloon"] : styles.baloon} ${level === "warning" ? styles["baloon-warning"] : styles["baloon-error"]}`}
+    >
       <header className={styles.header}>
         <h4>{level}</h4>
         <button onClick={closeHandler}>&times;</button>
