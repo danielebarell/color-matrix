@@ -9,6 +9,8 @@
   .panel {
     width: var(--panel-width);
     min-height: calc(var(--app-width) - var(--xs));
+    display: grid;
+    grid-template-rows: var(--minimum-button-size) 1px 1fr auto;
   }
 }
 .header {
@@ -33,8 +35,10 @@
   justify-content: space-between;
 }
 .actions {
+  flex: 1;
   display: flex;
   align-content: flex-end;
+  align-items: end;
   gap: var(--xsmall-size);
 }
 .color-components {

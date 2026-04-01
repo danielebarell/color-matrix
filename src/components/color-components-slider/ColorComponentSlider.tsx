@@ -78,6 +78,9 @@ export default function ColorComponentSlider({
   const currentValue = useColorMatrixSelector(
     (state: ColorMatrixRootState) => state.colorMatrix.activeColorComponent,
   );
+  const currentPosition = useColorMatrixSelector(
+    (state) => state.colorMatrix.position,
+  );
   /**
    * raw value from controls inside component
    */
@@ -111,12 +114,20 @@ export default function ColorComponentSlider({
   /* ============================================================
    * Effects
    * ============================================================ */
+  /**
+   * Updates rawValue if matrix position and value changes
+   */
   useEffect(() => {
-    console.log("currentValue", currentValue);
+    console.log(
+      "currentValue",
+      currentValue,
+      "currentPosition",
+      currentPosition,
+    );
     setRawValue(currentValue);
     precedentValue.current = currentValue;
     onSliderChange(currentValue!);
-  }, [currentValue]);
+  }, [currentValue, currentPosition]);
   /**
    * Implement continuous step change on minus and plus buttons' press
    */
@@ -135,7 +146,7 @@ export default function ColorComponentSlider({
         : undefined;
   }, [operation]);
   /**
-   * update inputValue with rowValue
+   * update inputValue with rawValue
    * so input field is in sync with other controls
    */
   useEffect(() => {

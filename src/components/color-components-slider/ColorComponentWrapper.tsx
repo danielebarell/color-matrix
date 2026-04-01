@@ -65,7 +65,6 @@ export default function ColorComponentWrapper({
   const prevPositionRef = useRef<ColorMatrixPosition | null>(null);
   const cccRef = useRef<ColorComponentCombinationIconsAPI>(null!);
   useEffect(() => {
-    console.log("initPosition", initPosition, "initValue", initValue);
     if (prevPositionRef.current !== initPosition) {
       setCommitedValues([initValue!]);
       prevPositionRef.current = initPosition;
