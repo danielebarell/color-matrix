@@ -1,8 +1,12 @@
-import type { DataImage } from "../../../data/data-images";
+import type { CSSProperties } from "react";
+import { type DataImage } from "../../../data/data-images";
 
-type PanelImageProps = { dataImage: DataImage };
+type PanelImageProps = { dataImage: DataImage; imageDimension: CSSProperties };
 
-export default function PanelImage({ dataImage }: PanelImageProps) {
+export default function PanelImage({
+  dataImage,
+  imageDimension,
+}: PanelImageProps) {
   if (dataImage.type === "raster")
     return (
       <picture>
@@ -18,11 +22,16 @@ export default function PanelImage({ dataImage }: PanelImageProps) {
           className="panel-image"
           alt="tulipani"
           src={dataImage.fallback}
-          style={{ minWidth: "1024px" }}
+          style={imageDimension}
         />
       </picture>
     );
   return (
-    <img alt={dataImage.id} src={dataImage.svgImage} className="panel-image" />
+    <img
+      alt={dataImage.id}
+      src={dataImage.svgImage}
+      style={imageDimension}
+      className="panel-image"
+    />
   );
 }

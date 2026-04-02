@@ -170,3 +170,47 @@ export function getStyleDimension(dataImage: DataImage): React.CSSProperties {
   };
   return style;
 }
+/**
+ *
+ * @param imageDimension altezza e larghezza reali dell'immagine.
+ * @param screenDimension le dimensioni del pannello dentro il quale si visualizza l'immagine.
+ * @returns le nuove dimensioni della foto da applicare in stile.
+ * L'immagine occupa l'intero spazio del pannello,
+ * in modo che le dimensioni relativamente più piccola dell'immegine combaci con quella del pannello
+ * e venga ridimensionata di conseguenza la dimensione più grande
+ *
+ */
+type Dimension = { width: number; height: number };
+export function getImageDimension(
+  imageDimension: Dimension,
+  panelDimension: Dimension,
+): React.CSSProperties {
+  //console.log(imageDimension, panelDimension);
+  const { width: imageWidth } = imageDimension;
+  const { height: imageHeight } = imageDimension;
+  const { width: panelWidth } = panelDimension;
+  const { height: panelHeight } = panelDimension;
+  const imageRatio = Math.floor(10000 * (imageWidth / imageHeight)) / 10000;
+  const panelRatio = Math.floor(10000 * (panelWidth / panelHeight)) / 10000;
+  /*if (imageRatio > 1) console.log("immagine è orizzonale di " + imageRatio);
+  else console.log("immagine è verticale di " + 1 / imageRatio);
+  //
+  if (panelRatio > 1) console.log("panel è orizzonale di " + panelRatio);
+  else console.log("panel è verticale di " + 1 / panelRatio);
+  */
+  //
+  let w, h;
+  if (imageRatio <= panelRatio) {
+    w = panelWidth;
+    h = panelWidth / imageRatio;
+  } else {
+    h = panelHeight;
+    w = panelHeight * imageRatio;
+  }
+  const style = {
+    width: `${Math.ceil(w)}px`,
+    height: `${Math.ceil(h)}px`,
+  };
+  //console.log(style);
+  return style;
+}

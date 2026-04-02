@@ -1,9 +1,15 @@
-import { getStyleDimension, type DataImage } from "../../../data/data-images";
+import {
+  getImageDimension,
+  getStyleDimension,
+  type DataImage,
+} from "../../../data/data-images";
 import { useRef, useState } from "react";
 import useImageDraggable from "../../../hooks/useImageDraggable";
 import PanelImage from "./PanelImage";
 import styles from "./image-panel.module.css";
 import Switcher from "../../switcher/Switcher";
+import useNarrowMediaQuery from "../../../hooks/useNarrowMediaQuery";
+import { LAYOUT_BREAKPOINT } from "../../../constants";
 
 type ImagePanelProps = {
   onExit: () => void;
@@ -25,6 +31,11 @@ export default function ImagePanel({
   function toggleFilter() {
     setCurrentFilter((prev) => (prev ? "" : filterId));
   }
+  const isNarrow = useNarrowMediaQuery(LAYOUT_BREAKPOINT);
+  const styleDimensions = getImageDimension(dataImage.dimension, {
+    width: isNarrow ? 320 : 720,
+    height: window.innerHeight,
+  });
   return (
     <div className={styles["image-modal"]}>
       <nav className={styles["image-nav"]}>
@@ -39,10 +50,10 @@ export default function ImagePanel({
           style={{
             WebkitFilter: `url(#${currentFilter})`,
             filter: `url(#${currentFilter})`,
-            ...getStyleDimension(dataImage),
+            ...styleDimensions,
           }}
         >
-          <PanelImage dataImage={dataImage} />
+          <PanelImage dataImage={dataImage} imageDimension={styleDimensions} />
         </div>
       </div>
     </div>
