@@ -5,6 +5,7 @@ import {
   type RefObject,
 } from "react";
 import styles from "./panel.module.css";
+import { useUIStore } from "../../hooks/useUIStore";
 export type ColorComponent = "R" | "G" | "B" | "A" | "1";
 
 export type ColorComponentCombination = {

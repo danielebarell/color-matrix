@@ -15,6 +15,8 @@ import type { ColorMatrixRootState } from "../../store/store";
 import useColorMatrixDispatch from "../../hooks/useColormatrixDispatch";
 import { setPosition, setValue } from "../../store/colormatrixSlice";
 import { useUIStore } from "../../hooks/useUIStore";
+import useNarrowMediaQuery from "../../hooks/useNarrowMediaQuery";
+import { LAYOUT_BREAKPOINT } from "../../constants";
 
 type ColorComponentWrapperProps = {
   isModal?: boolean;
@@ -72,7 +74,8 @@ export default function ColorComponentWrapper({
     if (!modalRef.current || initPosition === null) return;
     modalRef.current.show();
     dialogStateOpen("dialog");
-  }, [initPosition, initValue, modalRef, prevPositionRef]);
+    cccRef.current.show();
+  }, [initPosition, initValue, modalRef, prevPositionRef, cccRef]);
   //
   useEffect(() => {
     if (!cccRef.current) return;
