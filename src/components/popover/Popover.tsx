@@ -1,8 +1,5 @@
 import styles from "./popover.module.css";
-import type {
-  AlertLevel,
-  AlertMessage,
-} from "../color-components-slider/ColorComponentSlider";
+import type { AlertMessage } from "../color-components-slider/ColorComponentSlider";
 import { useEffect, useState } from "react";
 
 const Popover = ({ message, level }: AlertMessage) => {

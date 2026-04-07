@@ -15,8 +15,6 @@ import type { ColorMatrixRootState } from "../../store/store";
 import useColorMatrixDispatch from "../../hooks/useColormatrixDispatch";
 import { setPosition, setValue } from "../../store/colormatrixSlice";
 import { useUIStore } from "../../hooks/useUIStore";
-import useNarrowMediaQuery from "../../hooks/useNarrowMediaQuery";
-import { LAYOUT_BREAKPOINT } from "../../constants";
 
 type ColorComponentWrapperProps = {
   isModal?: boolean;

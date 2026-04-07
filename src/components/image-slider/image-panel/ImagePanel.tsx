@@ -1,8 +1,4 @@
-import {
-  getImageDimension,
-  getStyleDimension,
-  type DataImage,
-} from "../../../data/data-images";
+import { getImageDimension, type DataImage } from "../../../data/data-images";
 import { useRef, useState } from "react";
 import useImageDraggable from "../../../hooks/useImageDraggable";
 import PanelImage from "./PanelImage";
